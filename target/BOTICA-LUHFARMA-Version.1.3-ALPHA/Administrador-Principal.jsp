@@ -92,7 +92,7 @@
                     <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center"><i class="fas fa-exclamation-triangle text-red-600"></i></div>
                     <span class="text-sm font-medium text-red-600">+2.3%</span>
                 </div>
-                <h3 class="text-2xl font-semibold text-gray-800">23</h3>
+                <h3 class="text-2xl font-semibold text-gray-800">${proCli}</h3>
                 <p class="text-sm text-gray-500">Productos por Vencer</p>
             </div>
         </section>
