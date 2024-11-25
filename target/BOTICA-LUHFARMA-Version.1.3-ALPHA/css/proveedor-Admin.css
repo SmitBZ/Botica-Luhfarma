@@ -1,12 +1,12 @@
 /* Variables globales */
 :root {
-    --primary-color: #4F46E5;
-    --text-color: #1F2937;
-    --bg-color: #F9FAFB;
-    --card-bg: #FFFFFF;
-    --hover-bg: #F3F4F6;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --primary-color: #4F46E5; /* Color principal */
+    --text-color: #1F2937; /* Color del texto */
+    --bg-color: #F9FAFB; /* Color de fondo general */
+    --card-bg: #FFFFFF; /* Color de fondo para tarjetas */
+    --hover-bg: #F3F4F6; /* Color de fondo para hover */
+    --shadow: rgba(0, 0, 0, 0.1); /* Sombra estándar */
+    --transition: all 0.3s ease; /* Transición general */
 }
 
 /* Reset y configuraciones generales */
@@ -158,88 +158,91 @@ body.sidebar-closed {
 
 /* Main content */
 .main-content {
-            margin-left: 0rem;
-            margin-top: 5rem;
-            transition: all 0.3s ease-in-out;
-            padding: 2rem;
-        }
+    margin-left: 0rem;
+    margin-top: 5rem;
+    padding: 2rem;
+    transition: var(--transition);
+}
 
-        .table-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
 
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
+/* Status badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
 
-        .status-active {
-            background-color: #d4edda;
-            color: #155724;
-        }
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
 
-        .status-inactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+.status-inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
 
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-        }
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1050;
-        }
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
 
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .modal-content {
-            background-color: white;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 600px;
-            margin: 1rem;
-        }
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem;
+}
 
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .sidebar.show {
-                transform: translateX(0);
-            }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
 
-            .header {
-                left: 0;
-            }
+    .header {
+        left: 0;
+    }
 
-            .main-content {
-                margin-left: 0;
-            }
+    .main-content {
+        margin-left: 0;
+    }
 
-            .sidebar.show + .header {
-                left: 16rem;
-            }
+    .sidebar.show + .header {
+        left: 16rem;
+    }
 
-            .sidebar.show ~ .main-content {
-                margin-left: 16rem;
-            }
-        }
+    .sidebar.show ~ .main-content {
+        margin-left: 16rem;
+    }
+}

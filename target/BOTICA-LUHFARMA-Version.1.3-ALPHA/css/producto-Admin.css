@@ -1,6 +1,4 @@
-/* ================================
-   Variables Globales
-   ================================ */
+/* Variables Globales */
 :root {
     --primary-color: #4F46E5;
     --text-color: #1F2937;
@@ -11,9 +9,7 @@
     --transition: all 0.3s ease;
 }
 
-/* ================================
-   Reset y Configuraciones Generales
-   ================================ */
+/* Reset y Configuraciones Generales */
 * {
     margin: 0;
     padding: 0;
@@ -33,9 +29,7 @@ body.sidebar-closed {
     padding-left: 0;
 }
 
-/* ================================
-   Sidebar
-   ================================ */
+/* Sidebar */
 .sidebar {
     position: fixed;
     left: 0;
@@ -112,9 +106,7 @@ body.sidebar-closed {
     transform: translateX(5px);
 }
 
-/* ================================
-   Header
-   ================================ */
+/* Header */
 .header {
     position: fixed;
     top: 0;
@@ -164,9 +156,7 @@ body.sidebar-closed {
     color: var(--primary-color);
 }
 
-/* ================================
-   Main Content
-   ================================ */
+/* Main Content */
 .main-content {
     margin-left: 1rem;
     margin-top: 5rem;
@@ -174,9 +164,7 @@ body.sidebar-closed {
     padding: 2rem;
 }
 
-/* ================================
-   Tabla y Contenedores
-   ================================ */
+/* Tabla y Contenedores */
 .table-container {
     background: white;
     border-radius: 8px;
@@ -212,9 +200,7 @@ tr:hover {
     background-color: #f8f9fa;
 }
 
-/* ================================
-   Estatus y Botones
-   ================================ */
+/* Estatus y Botones */
 .status-badge {
     padding: 4px 8px;
     border-radius: 4px;
@@ -253,9 +239,7 @@ tr:hover {
     background-color: #2563eb;
 }
 
-/* ================================
-   Contenedores y Búsqueda
-   ================================ */
+/* Contenedores y Búsqueda */
 .stats-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

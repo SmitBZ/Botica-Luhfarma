@@ -1,6 +1,4 @@
-/* ================================ */
 /* Variables globales */
-/* ================================ */
 :root {
     --primary-color: #4F46E5;
     --text-color: #1F2937;
@@ -11,9 +9,7 @@
     --transition: all 0.3s ease;
 }
 
-/* ================================ */
 /* Reset y configuraciones generales */
-/* ================================ */
 * {
     margin: 0;
     padding: 0;
@@ -33,9 +29,7 @@ body.sidebar-closed {
     padding-left: 0;
 }
 
-/* ================================ */
 /* Sidebar */
-/* ================================ */
 .sidebar {
     position: fixed;
     left: 0;
@@ -112,9 +106,7 @@ body.sidebar-closed {
     transform: translateX(5px);
 }
 
-/* ================================ */
 /* Header */
-/* ================================ */
 .header {
     position: fixed;
     top: 0;
@@ -164,9 +156,7 @@ body.sidebar-closed {
     color: var(--primary-color);
 }
 
-/* ================================ */
 /* Main content */
-/* ================================ */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -261,9 +251,7 @@ select:focus {
     background-color: #15803d;
 }
 
-/* ================================ */
 /* Media Queries */
-/* ================================ */
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
