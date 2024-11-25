@@ -1,7 +1,5 @@
 package controller;
 
-import dao.AlmacenDAO;
-import dao.CategoriaDAO;
 import dao.PresentacionDAO;
 import dao.ProductoDAO;
 import java.io.IOException;
@@ -11,8 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Almacen;
-import model.Categoria;
 import model.Presentacion;
 import model.Producto;
 
