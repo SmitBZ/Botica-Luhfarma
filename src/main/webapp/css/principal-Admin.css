@@ -1,0 +1,240 @@
+/* Variables globales */
+:root {
+    --primary-color: #4F46E5;
+    --text-color: #1F2937;
+    --bg-color: #F9FAFB;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F3F4F6;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Reset y configuraciones generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding-left: 250px; /* Espacio para sidebar */
+    transition: var(--transition);
+}
+
+body.sidebar-closed {
+    padding-left: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background: var(--card-bg);
+    transition: var(--transition);
+    box-shadow: 2px 0 8px var(--shadow);
+    z-index: 1000;
+}
+
+.sidebar.closed {
+    left: -250px;
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--hover-bg);
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6B7280;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    color: var(--primary-color);
+    transform: rotate(90deg);
+}
+
+.nav-links {
+    padding: 1rem;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: var(--transition);
+    margin-bottom: 0.5rem;
+}
+
+.nav-link:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+}
+
+.nav-link i {
+    margin-right: 0.75rem;
+    width: 20px;
+    transition: var(--transition);
+}
+
+.nav-link:hover i {
+    transform: translateX(5px);
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 250px;
+    background: var(--card-bg);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: var(--transition);
+    z-index: 999;
+}
+
+.sidebar-closed .header {
+    left: 0;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #6B7280;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.menu-btn:hover {
+    color: var(--primary-color);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    color: #6B7280;
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+.logout-btn:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+}
+
+/* Main content */
+.main-content {
+    padding: 5rem 2rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 1px 3px var(--shadow);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.card img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Media queries */
+@media (max-width: 1024px) {
+    body {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        left: -250px;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .header {
+        left: 0;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .main-content {
+        padding: 4rem 1rem 1rem;
+    }
+}
