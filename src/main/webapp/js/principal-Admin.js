@@ -5,22 +5,34 @@ document.addEventListener("DOMContentLoaded", function() {
         card.addEventListener("click", function() {
             switch (index) {
                 case 0:
-                    window.location.href = "Administrador-Producto.jsp";
+                    window.location.href = "../ListarProductos";
                     break;
                 case 1:
-                    window.location.href = "/ListarUsuarios";
+                    window.location.href = "../ListarUsuarios";
                     break;
                 case 2:
                     window.location.href = "Administrador-Reporte.jsp";
                     break;
                 case 3:
-                    window.location.href = "Administrador-Inventario.jsp";
+                    window.location.href = "../ListarInventario";
                     break;
                 case 4:
-                    window.location.href = "Administrador-Venta.jsp";
+                    window.location.href = "../ListarVenta";
                     break;
                 case 5:
-                    window.location.href = "/ListarProveedor";
+                    window.location.href = "../ListarProveedor";
+                    break;
+                case 6:
+                    window.location.href = "../compra";
+                    break;
+                case 7:
+                    window.location.href = "../ListarAlmacen";
+                    break;
+                case 8:
+                    window.location.href = "../ListarCategoria";
+                    break;
+                 case 9:
+                    window.location.href = "../ListarPresentaciones";
                     break;
                 default:
                     console.error("Página no encontrada");
