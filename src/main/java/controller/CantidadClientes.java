@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ProductoDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -28,13 +29,15 @@ public class CantidadClientes extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        
-        // Llamar al método para contar clientes
+        ProductoDAO productoDAO = new ProductoDAO();
+
         int numClientes = usuarioDAO.contarClientes();
+        int proCli = productoDAO.ProductosVencer();
         
         // Establecer el atributo para la vista
         request.setAttribute("numClientes", numClientes);
-        
+        //Proceso de productos a vencer
+        request.setAttribute("proCli", proCli);
         // Redirigir a la página JSP para mostrar el resultado
         request.getRequestDispatcher("Administrador-Principal.jsp").forward(request, response);
     }
