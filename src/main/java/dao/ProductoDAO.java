@@ -3,6 +3,7 @@ package dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -117,5 +118,24 @@ public class ProductoDAO {
             System.out.println("Error al listar productos: " + e.getMessage());
         }
         return listaProductos;
+    }
+    
+    public int ProductosVencer() {
+        int proCli = 0;
+        consulta = "call sp_Productos_Vencer();";
+
+        try{
+            Connection cn = Conexion.getConnection();
+            PreparedStatement pstm = cn.prepareStatement(consulta);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                proCli = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+        return proCli;
     }
 }
