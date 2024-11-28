@@ -59,18 +59,24 @@ window.addEventListener('resize', function() {
         document.getElementById('editCategoryModal').classList.add('hidden');
     }
 
-    function openDeleteModal(categoryId) {
-        document.getElementById('deleteCategoryModal').classList.remove('hidden');
-    }
+let currentCategoryId = null;
 
-    function closeDeleteModal() {
-        document.getElementById('deleteCategoryModal').classList.add('hidden');
-    }
+function openDeleteModal(categoryId) {
+    currentCategoryId = categoryId; // Guarda el ID de la categoría
+    document.getElementById('deleteCategoryModal').classList.remove('hidden');
+}
 
-    function confirmDelete() {
-        // Lógica para eliminar la categoría
-        closeDeleteModal();
-    }
+function closeDeleteModal() {
+    currentCategoryId = null; // Limpia el ID de la categoría
+    document.getElementById('deleteCategoryModal').classList.add('hidden');
+}
 
+function confirmDelete() {
+    if (currentCategoryId) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarCategoria?idCategoria=${currentCategoryId}`;
+    }
+    closeDeleteModal();
+}
     
     
