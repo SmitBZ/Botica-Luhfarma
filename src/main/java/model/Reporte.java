@@ -1,12 +1,14 @@
 package model;
 
+import java.sql.Date;
+import java.time.LocalDate;
 /**
  *
  * @author Smit
  */
 public class Reporte {
     private int idVenta;
-    private String fecha;
+    private LocalDate fecha;
     private String cliente;
     private String estado;
     private int unidadesVendidas;
@@ -15,12 +17,11 @@ public class Reporte {
     private String presentacion;
     private double precioUnitario;
     private double totalVenta;
-    private String detallesProductos;
 
     public Reporte() {
     }
 
-    public Reporte(int idVenta, String fecha, String cliente, String estado, int unidadesVendidas, String medicamento, String categoria, String presentacion, double precioUnitario, double totalVenta, String detallesProductos) {
+    public Reporte(int idVenta, LocalDate fecha, String cliente, String estado, int unidadesVendidas, String medicamento, String categoria, String presentacion, double precioUnitario, double totalVenta) {
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.cliente = cliente;
@@ -31,7 +32,6 @@ public class Reporte {
         this.presentacion = presentacion;
         this.precioUnitario = precioUnitario;
         this.totalVenta = totalVenta;
-        this.detallesProductos = detallesProductos;
     }
 
     public int getIdVenta() {
@@ -42,11 +42,11 @@ public class Reporte {
         this.idVenta = idVenta;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -112,13 +112,5 @@ public class Reporte {
 
     public void setTotalVenta(double totalVenta) {
         this.totalVenta = totalVenta;
-    }
-
-    public String getDetallesProductos() {
-        return detallesProductos;
-    }
-
-    public void setDetallesProductos(String detallesProductos) {
-        this.detallesProductos = detallesProductos;
     }
 }
