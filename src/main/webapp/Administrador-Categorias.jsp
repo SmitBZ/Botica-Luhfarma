@@ -66,7 +66,7 @@
                     <p class="text-gray-600 text-sm mb-4"><%= ct.getDescripcion() %></p>
                     <div class="flex justify-end space-x-2">
                         <button onclick="openEditModal(2)" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
-                        <button onclick="openDeleteModal(2)" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                        <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= ct.getIdCategoria() %>)"><i class="fas fa-trash-alt mr-1"></i>Eliminar</button>
                     </div>
                 </div>
                 <% }} else { %><p class="text-gray-500">No hay categorias registradas disponibles.</p><% } %>
