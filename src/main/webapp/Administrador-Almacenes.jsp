@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/principal-Admin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/almacen-Admin.css">
         <link rel="icon" href="${pageContext.request.contextPath}/img/logo.ico" type="image/x-icon"> 
         <title>BOTICA LUHFARMA</title>
     </head>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="mt-4 flex justify-between">
                         <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit mr-1"></i>Editar</button>
-                        <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i>Eliminar</button>
+                        <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= almacen.getIdAlmacen() %>)"><i class="fas fa-trash-alt mr-1"></i>Eliminar</button>
                     </div>
                 </div>
                 <% }} else { %><p class="text-gray-500">No hay almacenes disponibles.</p><% } %>
@@ -106,7 +106,17 @@
                 </form>
             </div>
         </div>
-
+         
+        <div id="deleteCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Almacen</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar el Almacen Seleccionado?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                </div>
+            </div>
+        </div>
         <script src="${pageContext.request.contextPath}/js/almacen-Admin.js"></script>
     </body>
 </html>
