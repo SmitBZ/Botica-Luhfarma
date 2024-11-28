@@ -1,3 +1,5 @@
+<%@page import="model.Reporte"%>
+<%@page import="java.util.List"%>
 <%@ page session="true" %>
 <%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,7 +18,7 @@
 <body>
     <aside class="sidebar fixed left-0 top-0 h-full w-64 bg-white shadow-lg" id="sidebar">
         <div class="sidebar-header flex items-center justify-between p-4">
-            <img src="../img/logo.ico" alt="Logo" class="w-12 h-12"><h2>LUHFARMA</h2>
+            <img src="img/logo.ico" alt="Logo" class="w-12 h-12"><h2>LUHFARMA</h2>
             <button class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
 <nav class="nav-links flex flex-col space-y-2 p-4">
@@ -76,55 +78,42 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Fecha</th>
+                        <th>Modalidad</th>
+                        <th>Estado</th>
                         <th>Medicamento</th>
                         <th>Categoría</th>
+                        <th>Tipo de Presentacion</th>
                         <th>Unidades Vendidas</th>
                         <th>Precio Unitario</th>
                         <th>Total</th>
-                        <th>Estado de Stock</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Paracetamol 500mg</td>
-                        <td>Analgésicos</td>
-                        <td>450</td>
-                        <td>$5.99</td>
-                        <td>$2,695.50</td>
-                        <td><span class="status status-high">Alto</span></td>
+                        <%
+                            List<Reporte> ListaRe = (List<Reporte>) request.getAttribute("aLista");
+                            if(ListaRe != null && !ListaRe.isEmpty()){
+                                for(Reporte rp : ListaRe){
+                            
+                        %>
+                        <td><%= rp.getFecha() %></td>
+                        <td><%= rp.getCliente() %></span></td>
+                        <td><span class="status status-high"><%= rp.getEstado() %></span></td>
+                        <td><%= rp.getMedicamento() %></td>
+                        <td><%= rp.getCategoria() %></td>
+                        <td><%= rp.getPresentacion() %></td>
+                        <td><%= rp.getUnidadesVendidas() %></td>
+                        <td><%= rp.getPrecioUnitario() %></td>
+                        <td><%= rp.getTotalVenta() %></td>
                     </tr>
-                    <tr>
-                        <td>Amoxicilina 250mg</td>
-                        <td>Antibióticos</td>
-                        <td>320</td>
-                        <td>$12.50</td>
-                        <td>$4,000.00</td>
-                        <td><span class="status status-medium">Medio</span></td>
-                    </tr>
-                    <tr>
-                        <td>Omeprazol 20mg</td>
-                        <td>Antiácidos</td>
-                        <td>280</td>
-                        <td>$8.75</td>
-                        <td>$2,450.00</td>
-                        <td><span class="status status-low">Bajo</span></td>
-                    </tr>
-                    <tr>
-                        <td>Loratadina 10mg</td>
-                        <td>Antialérgicos</td>
-                        <td>195</td>
-                        <td>$6.25</td>
-                        <td>$1,218.75</td>
-                        <td><span class="status status-high">Alto</span></td>
-                    </tr>
-                    <tr>
-                        <td>Ibuprofeno 400mg</td>
-                        <td>Antiinflamatorios</td>
-                        <td>298</td>
-                        <td>$7.50</td>
-                        <td>$2,235.00</td>
-                        <td><span class="status status-medium">Medio</span></td>
-                    </tr>
+                    <%      }
+                        } else {
+                    %>
+                        <td colspan="9" class="text-gray-600 hover:text-gray-800"><center>No hay reporte registrado</center></td>
+                    <% 
+                        } 
+                    %>
                 </tbody>
             </table>
         </div>
