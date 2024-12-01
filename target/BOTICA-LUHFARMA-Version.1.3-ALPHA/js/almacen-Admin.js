@@ -33,11 +33,32 @@ window.addEventListener('resize', function() {
         body.classList.remove('sidebar-closed');
     }
 });
-        function openAddWarehouseModal() {
-            document.getElementById('addWarehouseModal').classList.remove('hidden');
-        }
+function openAddWarehouseModal() {
+    document.getElementById('addWarehouseModal').classList.remove('hidden');
+}
 
-        function closeAddWarehouseModal() {
-            document.getElementById('addWarehouseModal').classList.add('hidden');
-        }
+function closeAddWarehouseModal() {
+    document.getElementById('addWarehouseModal').classList.add('hidden');
+}
+
+
+let currentCategoryId = null;
+
+function openDeleteModal(categoryId) {
+    currentCategoryId = categoryId; // Guarda el ID de la categoría
+    document.getElementById('deleteCategoryModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    currentCategoryId = null; // Limpia el ID de la categoría
+    document.getElementById('deleteCategoryModal').classList.add('hidden');
+}
+
+function confirmDelete() {
+    if (currentCategoryId) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarAlmacen?idAlmacen=${currentCategoryId}`;
+    }
+    closeDeleteModal();
+}
 
