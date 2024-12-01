@@ -16,14 +16,13 @@ private static DataSource dataSource;
     
     static {
         try {
-            // Buscar el DataSource configurado en JNDI
+            
             InitialContext context = new InitialContext();
-            // Asegúrate de que el nombre aquí coincida con el que configuraste en el servidor
-            dataSource = (DataSource) context.lookup("java:/db_botica");
+            dataSource = (DataSource) context.lookup("jdbc/lufarma");
         } catch (NamingException e) {
             e.printStackTrace();
         }
-    }
+    } 
     
     /**
      * Obtiene una conexión a la base de datos.
