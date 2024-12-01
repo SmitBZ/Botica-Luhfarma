@@ -99,7 +99,7 @@ public class UsuarioDAO {
     public Usuario Autenticar(Usuario us){
         Usuario usa = null;
         String rol, nombre;
-        String Consulta = "call sp_Validar_usuario(?, ?, ?, ?);";
+        Consulta = "call sp_Validar_usuario(?, ?, ?, ?);";
     
         try {
             Connection cn = Conexion.getConnection();
