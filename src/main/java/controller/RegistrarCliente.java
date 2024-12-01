@@ -1,5 +1,6 @@
 package controller;
 
+import dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -7,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Usuario;
 
 /**
  *
@@ -24,20 +26,51 @@ public class RegistrarCliente extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegistrarCliente</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegistrarCliente at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String Nombre = request.getParameter("txtNombre");
+        String Apellido = request.getParameter("txtApellidos");
+        String Correo = request.getParameter("txtCorreo");
+        String Telefono = request.getParameter("txtTelefono");
+        String DNI = request.getParameter("txtDNI");
+        String Direccion = request.getParameter("txtDireccion");
+        String Contraseña = request.getParameter("txtPassword");
+        String Verificacion = request.getParameter("txtVerificacion");
+        String Rol = "cliente";
+        String Estado = "Activo";
+        
+        if(Nombre.isEmpty() || Apellido.isEmpty() || Correo.isEmpty() || Telefono.isEmpty() || DNI.isEmpty() || Direccion.isEmpty() || Contraseña.isEmpty() || Verificacion.isEmpty() || Rol.isEmpty() || Estado.isEmpty()){
+            request.setAttribute("mensaje", "Todos los campos son obligatorios");
+            request.getRequestDispatcher("principal.jsp").forward(request, response);
+            return;
+        }
+        
+        if(!Contraseña.equals(Verificacion)){
+            request.setAttribute("mensaje", "Las contraseñas no coinciden");
+            request.getRequestDispatcher("principal.jsp").forward(request, response);
+            return;
+        }
+        
+        UsuarioDAO usd = new UsuarioDAO();
+        Usuario us = new Usuario();
+        us.setNombre(Nombre);
+        us.setApellido(Apellido);
+        us.setTelefono(Telefono);
+        us.setDni(DNI);
+        us.setDireccion(Direccion);
+        us.setCorreo(Correo);
+        us.setContraseña(Contraseña);
+        us.setRol(Rol);
+        us.setEstado(Estado);
+        
+        String nombreUsuario = usd.RegistrarCliente(us);
+        
+        if(nombreUsuario != null){
+            request.setAttribute("nombreUsuario", nombreUsuario);
+            request.setAttribute("mensaje", "Registro exitoso, Bienvenido " + nombreUsuario + "!");
+            request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
+        }else{
+            request.setAttribute("mensaje", "El correo ya está registrado");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 
