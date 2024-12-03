@@ -39,13 +39,13 @@ public class RegistrarCliente extends HttpServlet {
         
         if(Nombre.isEmpty() || Apellido.isEmpty() || Correo.isEmpty() || Telefono.isEmpty() || DNI.isEmpty() || Direccion.isEmpty() || Contraseña.isEmpty() || Verificacion.isEmpty() || Rol.isEmpty() || Estado.isEmpty()){
             request.setAttribute("mensaje", "Todos los campos son obligatorios");
-            request.getRequestDispatcher("principal.jsp").forward(request, response);
+            request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
             return;
         }
         
         if(!Contraseña.equals(Verificacion)){
             request.setAttribute("mensaje", "Las contraseñas no coinciden");
-            request.getRequestDispatcher("principal.jsp").forward(request, response);
+            request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
             return;
         }
         
