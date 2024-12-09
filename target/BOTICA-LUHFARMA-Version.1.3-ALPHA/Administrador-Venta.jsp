@@ -53,58 +53,65 @@
         <a href="${pageContext.request.contextPath}/index.jsp" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
     </header>
     <br><br><br><br>
-    <div class="container mx-auto p-4">
+<div class="container mx-auto p-4 grid grid-cols-2 gap-4">
+        <form id="formVenta" action="RegistrarVentaEmpleado" method="post">
         <div class="card bg-white shadow-md rounded-lg p-4 mb-4">
             <h2 class="text-lg font-bold">Nueva Venta</h2>
             <div class="form-group">
-                <label for="codigo-venta" class="block text-sm font-medium text-gray-700">Código de Venta</label>
-                <input type="text" id="codigo-venta" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                <label for="txtProducto" class="block text-sm font-medium text-gray-700">Codigo de Venta</label>
+                <input type="text" id="txtCodigo" name="txtCodigo" readonly value="<%= request.getAttribute("codigoVenta") %>" class="mt-1 block w-full p-2 border border-gray-300 rounded">
             </div>
             <div class="form-group">
-                <label for="articulo" class="block text-sm font-medium text-gray-700">Artículo</label>
-                <select id="articulo" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                <label for="txtProducto" class="block text-sm font-medium text-gray-700">Artículo</label>
+                <select id="txtProducto" name="txtProducto" class="mt-1 block w-full p-2 border border-gray-300 rounded">
                     <option value="">Seleccione un producto</option>
-                    <% List<Producto> aPr = (List<Producto>) request.getAttribute("aPrd"); if (aPr != null && !aPr.isEmpty()) {for (Producto pr : aPr) {%>
+                    <% List<Producto> aPr = (List<Producto>) request.getAttribute("aPrd"); 
+                       if (aPr != null && !aPr.isEmpty()) {
+                           for (Producto pr : aPr) { %>
                     <option value="<%= pr.getIdProducto() %>"><%= pr.getNombre() %></option>
-                    <% }} else { %><option disabled>No hay productos registradas disponibles</option><% } %>
+                    <% }} else { %>
+                    <option disabled>No hay productos registradas disponibles</option>
+                    <% } %>
                 </select>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div class="form-group">
-                    <label for="unidad" class="block text-sm font-medium text-gray-700">Presentación</label>
-                    <select id="unidad" class="mt-1 block w-full p-2 border border-gray-300 rounded">
-                        <option value="">Seleccione un producto</option>
-                        <% List<Presentacion> pres = (List<Presentacion>) request.getAttribute("aPres");if (pres != null && !pres.isEmpty()) {for (Presentacion pr : pres) { %>
+                    <label for="txtPresentacion" class="block text-sm font-medium text-gray-700">Presentación</label>
+                    <select id="txtPresentacion" name="txtPresentacion" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                        <option value="">Seleccione una presentación</option>
+                        <% List<Presentacion> pres = (List<Presentacion>) request.getAttribute("aPres");
+                           if (pres != null && !pres.isEmpty()) {
+                               for (Presentacion pr : pres) { %>
                         <option value="<%= pr.getIdPresentacion() %>"><%= pr.getNombre() %></option>
-                        <% }} else { %><option disabled>No hay presentaciones registradas disponibles</option><% } %>
+                        <% }} else { %>
+                        <option disabled>No hay presentaciones registradas disponibles</option>
+                        <% } %>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="cantidad" class="block text-sm font-medium text-gray-700">Cantidad</label>
-                    <input type="text" id="txtCantidad" min="1" value="1" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <label for="txtCantidad" class="block text-sm font-medium text-gray-700">Cantidad</label>
+                    <input type="text" id="txtCantidad" name="txtCantidad" min="1" value="1" class="mt-1 block w-full p-2 border border-gray-300 rounded">
                 </div>
             </div>
             <div class="form-group">
-                <label for="precio" class="block text-sm font-medium text-gray-700">Precio Unitario</label>
-                <input type="text" id="txtPrecio" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                <label for="txtPrecio" class="block text-sm font-medium text-gray-700">Precio Unitario</label>
+                <input type="text" id="txtPrecio" name="precioUnitario" class="mt-1 block w-full p-2 border border-gray-300 rounded">
             </div>
             <button id="agregar" class="mt-4 bg-blue-600 text-white p-2 rounded"><i class="fas fa-plus"></i>Agregar al Carrito</button>
-            <div class="button-group mt-4 flex gap-2">
-                <button id="nueva-venta" class="flex-1 bg-green-600 text-white p-2 rounded"><i class="fas fa-file"></i>Nueva Venta</button>
-                <button id="salir" class="flex-1 bg-red-600 text-white p-2 rounded"><i class="fas fa-sign-out-alt"></i>Salir</button>
-            </div>
         </div>
+        </form>
         <div class="card bg-white shadow-md rounded-lg p-4">
             <h2 class="text-lg font-bold">Detalle de Venta</h2>
             <div class="productos-lista" id="productos-lista"></div>
-            
             <div class="total-section flex justify-between mt-4">
                 <span class="font-medium">Total</span>
                 <span id="total" class="font-bold">S/ 0.00</span>
             </div>
-            <button id="confirmar-venta" class="mt-4 w-full bg-blue-600 text-white p-2 rounded"><i class="fas fa-check"></i>Confirmar Venta</button>
+            <button id="confirmar-venta" type="submit" class="mt-4 w-full bg-green-600 text-white p-2 rounded"><i class="fas fa-check"></i>Confirmar Venta</button>
         </div>
     </div>
+
+
 
     <script src="${pageContext.request.contextPath}/js/venta-Admin.js"></script>
 </body>

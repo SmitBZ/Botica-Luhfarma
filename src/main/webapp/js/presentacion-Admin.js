@@ -51,13 +51,24 @@ window.addEventListener('resize', function() {
             document.getElementById('editPresentacionModal').classList.add('hidden');
         }
 
-        function confirmDeletePresentacion(id) {
-            document.getElementById('deletePresentacionId').value = id;
-            document.getElementById('deletePresentacionModal').classList.remove('hidden');
-        }
+let currenPresentacionId = null;
 
-        function closeDeletePresentacionModal() {
-            document.getElementById('deletePresentacionModal').classList.add('hidden');
-        }
+function openDeleteModal(presentacionId) {
+    currenPresentacionId = presentacionId; // Guarda el ID de la categoría
+    document.getElementById('deletePresentacionModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    currenPresentacionId = null; // Limpia el ID de la categoría
+    document.getElementById('deletePresentacionModal').classList.add('hidden');
+}
+
+function confirmDelete() {
+    if (currenPresentacionId) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarPresentacion?idPresentacion=${currenPresentacionId}`;
+    }
+    closeDeleteModal();
+}
     
     

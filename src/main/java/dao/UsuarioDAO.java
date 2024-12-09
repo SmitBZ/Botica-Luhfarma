@@ -182,20 +182,21 @@ public class UsuarioDAO {
         return numClientes;
     }
     
-    public String eliminarUsuario(int idUsuario) {
-        Consulta = "call sp_Eliminar_Usuario(?, ?);";
-        String Valido = null;
+    public boolean Eliminar(int idUsuario) {
+        Consulta = "call sp_Eliminar_Usuario(?);";
+        boolean exitoso = false;
 
         try (Connection cn = Conexion.getConnection();
-             CallableStatement cst = cn.prepareCall(Consulta)) {
+            CallableStatement cst = cn.prepareCall(Consulta)) {
 
             cst.setInt(1, idUsuario);
 
-            ResultSet rs = cst.executeQuery();
+            cst.execute();
+            exitoso = true;
 
         } catch (SQLException e) {
-            System.out.println("Error al ejecutar el procedimiento almacenado: " + e.getMessage());
+            System.out.print(e);
         }
-        return Valido;
+        return exitoso;
     }
 }

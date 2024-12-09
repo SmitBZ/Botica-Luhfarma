@@ -52,7 +52,7 @@ public class PresentacionDAO {
 
     // Método para eliminar una presentación
     public boolean Eliminar(int idPresentacion) {
-        consulta = "CALL sp_Eliminar_Presentacion(?);";
+        consulta = "call sp_Eliminar_Presentacion(?);";
         boolean exitoso = false;
 
         try {

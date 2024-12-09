@@ -76,10 +76,10 @@
                     <h3 class="text-lg font-semibold text-gray-800"><%= pr.getNombre() %></h3>
                     <p class="text-gray-600"><%= pr.getDescripcion() %></p>
                     <div class="flex space-x-2">
-                        <button class="text-blue-500 hover:text-blue-600">
+                        <button class="text-blue-500 hover:text-blue-600" onclick="openEditPresentacionModal()">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="text-red-500 hover:text-red-600">
+                        <button class="text-red-500 hover:text-red-600" onclick="openDeleteModal(<%= pr.getIdPresentacion() %>)">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -160,27 +160,15 @@
     </div>
 
     <%-- Modal para Confirmar Eliminación --%>
-    <div id="deletePresentacionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg shadow-xl p-6 w-96">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-red-600">Confirmar Eliminación</h2>
-                <button onclick="closeDeletePresentacionModal()" class="text-gray-600 hover:text-gray-900">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <p class="text-gray-700 mb-4">¿Está seguro que desea eliminar esta presentación?</p>
-            <form action="${pageContext.request.contextPath}/EliminarPresentacion" method="post">
-                <input type="hidden" id="deletePresentacionId" name="presentacionId">
-                <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeletePresentacionModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                        Eliminar
-                    </button>
+    <div id="deletePresentacionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Presetación</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar la presentación seleccionada?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
                 </div>
-            </form>
-        </div>
+            </div>
     </div>
 
     <%-- JavaScript para Modales --%>

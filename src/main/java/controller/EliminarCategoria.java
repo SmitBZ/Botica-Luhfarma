@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Smit
  */
-@WebServlet(name = "<button class=\"text-red-500 hover:text-red-700\" onclick=\"openDeleteModal(<%= almacen.getIdAlmacen() %>)\"><i class=\"fas fa-trash-alt mr-1\"></i>Eliminar</button>", urlPatterns = {"/EliminarCategoria"})
+@WebServlet(name = "EliminarCategoria", urlPatterns = {"/EliminarCategoria"})
 public class EliminarCategoria extends HttpServlet {
 
     /**

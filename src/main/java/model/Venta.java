@@ -1,76 +1,87 @@
 package model;
 
-import java.sql.Date;
-
 /**
  *
  * @author Smit
  */
 public class Venta {
-    private int idVenta;
-    private String Nombre;
-    private double Precio;
-    private Date Fecha;
-    private String Comprobante;
-    private String Proveedor;
+     private int idCliente;
+    private int idModalidad;
+    private String codigoVenta;
+    private int productoID;
+    private int presentacionID;
+    private int cantidad;
+    private double precioUnitario;
 
+    // Constructor vacío
     public Venta() {
     }
 
-    public Venta(int idVenta, String Nombre, double Precio, Date Fecha, String Comprobante, String Proveedor) {
-        this.idVenta = idVenta;
-        this.Nombre = Nombre;
-        this.Precio = Precio;
-        this.Fecha = Fecha;
-        this.Comprobante = Comprobante;
-        this.Proveedor = Proveedor;
+    // Constructor con parámetros
+    public Venta(int idCliente, int idModalidad, String codigoVenta, int productoID, int presentacionID, int cantidad, double precioUnitario) {
+        this.idCliente = idCliente;
+        this.idModalidad = idModalidad;
+        this.codigoVenta = codigoVenta;
+        this.productoID = productoID;
+        this.presentacionID = presentacionID;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
     }
 
-    public int getIdVenta() {
-        return idVenta;
+    // Getters y Setters
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public int getIdModalidad() {
+        return idModalidad;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setIdModalidad(int idModalidad) {
+        this.idModalidad = idModalidad;
     }
 
-    public double getPrecio() {
-        return Precio;
+    public String getCodigoVenta() {
+        return codigoVenta;
     }
 
-    public void setPrecio(double Precio) {
-        this.Precio = Precio;
+    public void setCodigoVenta(String codigoVenta) {
+        this.codigoVenta = codigoVenta;
     }
 
-    public Date getFecha() {
-        return Fecha;
+    public int getProductoID() {
+        return productoID;
     }
 
-    public void setFecha(Date Fecha) {
-        this.Fecha = Fecha;
+    public void setProductoID(int productoID) {
+        this.productoID = productoID;
     }
 
-    public String getComprobante() {
-        return Comprobante;
+    public int getPresentacionID() {
+        return presentacionID;
     }
 
-    public void setComprobante(String Comprobante) {
-        this.Comprobante = Comprobante;
+    public void setPresentacionID(int presentacionID) {
+        this.presentacionID = presentacionID;
     }
 
-    public String getProveedor() {
-        return Proveedor;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setProveedor(String Proveedor) {
-        this.Proveedor = Proveedor;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 }

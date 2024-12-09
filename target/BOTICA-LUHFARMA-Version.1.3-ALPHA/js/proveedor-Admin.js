@@ -72,23 +72,31 @@ function editProveedor(button) {
     openModal('proveedorModal');
 }
 
+let currentProveedorID = null;
 
+function openDeleteModal(proveedorId) {
+    currentProveedorID = proveedorId; // Guarda el ID de la categoría
+    document.getElementById('deleteProveedorModal').classList.remove('hidden');
+}
 
-        function deleteProveedor(id) {
-            currentDeleteId = id;
-            openModal('deleteModal');
-        }
+function closeDeleteModal() {
+    currentProveedorID = null; // Limpia el ID de la categoría
+    document.getElementById('deleteProveedorModal').classList.add('hidden');
+}
 
-        function confirmDelete() {
-            // Aquí iría la lógica para eliminar el proveedor
-            closeModal('deleteModal');
-            // Mostrar notificación de éxito
-            alert('Proveedor eliminado correctamente');
-        }
+function confirmDelete() {
+    if (currentProveedorID) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarProveedor?idProveedor=${currentProveedorID}`;
+    }
+    closeDeleteModal();
+}
 
         // Función para exportar a Excel
         function exportToExcel() {
             // Aquí iría la lógica para exportar a Excel
             alert('Exportando datos a Excel...');
         }
+        
+        
         

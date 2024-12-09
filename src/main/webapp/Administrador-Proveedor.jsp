@@ -85,7 +85,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
                                 <button class="text-blue-600 hover:text-blue-900" onclick="editProveedor(this)" data-id="<%= proveedor.getIdProveedor() %>"data-nombre="<%= proveedor.getNombre() %>"data-ruc="<%= proveedor.getRuc() %>"data-correo="<%= proveedor.getCorreo() %>"data-telefono="<%= proveedor.getTelefono() %>"data-direccion="<%= proveedor.getDireccion() %>"data-entidad="<%= proveedor.getEntidad() %>"><i class="fas fa-edit"></i></button>
-                                <button class="text-red-600 hover:text-red-900" onclick="deleteProveedor(<%= proveedor.getIdProveedor() %>)"><i class="fas fa-trash"></i></button>
+                                <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= proveedor.getIdProveedor() %>)"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -142,20 +142,17 @@
             </div>
         </div>
     </div>
-    <div id="deleteModal" class="modal">
-        <div class="modal-content max-w-md">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold text-gray-900">Confirmar Eliminación</h3>
-                    <button onclick="closeModal('deleteModal')" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
-                </div>
-                <p class="text-gray-600 mb-6">¿Está seguro que desea eliminar este proveedor? Esta acción no se puede deshacer.</p>
-                <div class="flex justify-end space-x-3">
-                    <button onclick="closeModal('deleteModal')" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
-                    <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Eliminar</button>
+                    
+                    
+    <div id="deleteProveedorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Proveedor</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar el proveedor Seleccionado?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
                 </div>
             </div>
-        </div>
     </div>
                     
     <script src="${pageContext.request.contextPath}/js/proveedor-Admin.js"></script>

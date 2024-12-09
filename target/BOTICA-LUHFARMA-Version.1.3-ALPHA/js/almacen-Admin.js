@@ -62,3 +62,49 @@ function confirmDelete() {
     closeDeleteModal();
 }
 
+
+function validarCapacidad(event) {
+    // Obtener el valor actual del campo
+    let cap = event.target.value;
+    
+    // Remover cualquier carácter que no sea número
+    let numeroLimpio = cap.replace(/\D/g, '');
+    
+    // Limitar a 8 dígitos (longitud del DNI en Perú)
+    if (numeroLimpio.length > 5) {
+        numeroLimpio = numeroLimpio.slice(0, 5);
+    }
+    
+    // Actualizar el valor del campo
+    event.target.value = numeroLimpio;
+}
+
+// Función para validar el formulario antes de enviarlo
+function validarFormulario(event) {
+    const capa = document.getElementById('txtCapacidad').value;
+    
+
+    if (capa.length !== 5) {
+        alert('La capacidad debe ser un número positivo');
+        event.preventDefault();
+        return false;
+    }
+    
+    return true;
+}
+
+// Agregar los event listeners cuando el documento esté cargado
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener referencias a los campos
+    const capInput = document.getElementById('txtCapacidad');
+    const formulario = document.querySelector('.signup-form');
+    
+    if (capInput) {
+        capInput.addEventListener('input', validarCapacidad);
+    }
+    
+    // Agregar validación al enviar el formulario
+    if (formulario) {
+        formulario.addEventListener('submit', validarFormulario);
+    }
+});

@@ -88,17 +88,8 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getTelefono() %></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getContraseña()%></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                
-                                <form action="${pageContext.request.contextPath}/RegistrarUsuario" method="post" class="inline-block">
-                                    <input type="hidden" name="action" value="edit">
-                                    <input type="hidden" name="id" value="<%= usuario.getIdUsuario() %>">
-                                    <button type="button" onclick="openEditModal(<%= usuario.getIdUsuario() %>)" class="text-blue-600 hover:text-blue-900"><i class="fas fa-edit"></i></button>
-                                </form>
-                                
-                                <form action="${pageContext.request.contextPath}/EliminarUsuario" method="post" class="inline-block" onsubmit="return confirm('¿Está seguro de eliminar este usuario?');">
-                                    <input type="hidden" name="id" value="<%= usuario.getIdUsuario() %>">
-                                    <button type="submit" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
-                                </form>
+                                <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit mr-1"></i></button>
+                                <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= us.getIdUsuario() %>)"><i class="fas fa-trash-alt mr-1"></i></button>
                             </td>
                         </tr>
                         <%
@@ -154,7 +145,18 @@
             </form>
         </div>
     </div>
-                
+    
+    <div id="deleteUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Usuario</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar el usuario seleccionado?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                </div>
+            </div>
+    </div>
+
     <script src="${pageContext.request.contextPath}/js/usuario-Admin.js"></script>
 </body>
 </html>

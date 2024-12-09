@@ -18,7 +18,7 @@ private static DataSource dataSource;
         try {
             
             InitialContext context = new InitialContext();
-            dataSource = (DataSource) context.lookup("jdbc/lufarma");
+            dataSource = (DataSource) context.lookup("java:/luhfarma");
         } catch (NamingException e) {
             e.printStackTrace();
         }

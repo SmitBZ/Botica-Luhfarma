@@ -137,7 +137,7 @@
                     </div>
                     <div class="input-group">
                         <label for="dni">DNI</label>
-                        <input type="text" id="txtDNI" name="txtDNI" required pattern="[0-9]{8}" title="Debe ingresar un DNI válido de 8 dígitos"placeholder="Ingrese su DNI">
+                        <input type="text" id="txtDNI" name="txtDNI" required pattern="[0-9]{8}" title="Debe ingresar un DNI válido de 8 dígitos" maxlength="8" placeholder="Ingrese su DNI">
                     </div>
                     <div class="input-group">
                         <label for="direccion">Direccion</label>

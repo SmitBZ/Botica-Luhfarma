@@ -1,5 +1,6 @@
 package controller;
 
+import dao.UsuarioDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,6 +25,24 @@ public class EliminarUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idUsuarioParam = request.getParameter("idUsuario");
+        int idUsuario;
+        
+        try {
+            idUsuario = Integer.parseInt(idUsuarioParam);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de almacén no válido");
+            return;
+        }
+
+        UsuarioDAO userdao = new UsuarioDAO();
+        boolean eliminado = userdao.Eliminar(idUsuario);
+
+        if (eliminado) {
+            response.sendRedirect(request.getContextPath() + "/ListarUsuario?success=Eliminado");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/ListarUsuario?error=NoSePudoEliminar");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
