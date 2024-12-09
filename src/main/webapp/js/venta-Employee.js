@@ -1,6 +1,9 @@
-// ================================
-// Funciones de Sidebar
-// ================================
+/**
+ * Funcion del sidebar
+ * -Cambia el estado de visibilidad de la barra lateral (sidebar).
+ * -Añade o quita las clases CSS closed y sidebar-closed en el sidebar y el body respectivamente.
+ * -Esto permite ocultar o mostrar la barra lateral y ajustar el diseño de la página en consecuencia.
+ */
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -9,7 +12,13 @@ function toggleSidebar() {
     body.classList.toggle('sidebar-closed');
 }
 
-// Cerrar sidebar en móviles al hacer clic fuera
+/**
+ * Funcion del sidebar para pantallas pequeñas
+ * -Detecta clics en cualquier parte del documento.
+ * -Si el clic no ocurre dentro del sidebar ni en el botón del menú (menu-btn) y la ventana es menor o igual a 1024 píxeles, 
+ *  se cierra el sidebar.
+ * -Evita que el sidebar permanezca abierto accidentalmente en pantallas pequeñas.
+ */
 document.addEventListener('click', function(event) {
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.querySelector('.menu-btn');
@@ -22,7 +31,12 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Ajustar sidebar al redimensionar ventana
+/**
+ * Funcion para ajustar el diseño según el tamaño de la ventana
+ * -Detecta cambios en el tamaño de la ventana.
+ * -Si la ventana es pequeña (<= 1024px), cierra automáticamente el sidebar.
+ * -En pantallas grandes, asegura que el sidebar esté visible.
+ */
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -36,19 +50,21 @@ window.addEventListener('resize', function() {
     }
 });
 
-
-
+/**
+ * Gestión del Carrito de Compras
+ * -Espera a que la página esté completamente cargada antes de interactuar con los elementos.
+ * -Define el carrito como un array para almacenar los productos seleccionados.
+ */
 document.addEventListener("DOMContentLoaded", () => {
     const productosLista = document.getElementById("productos-lista");
     const totalSpan = document.getElementById("total");
     const agregarBtn = document.getElementById("agregar");
 
     let carrito = [];
-
+    //Agregar Producto al Carrito
     agregarBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        // Obtener valores de los campos
         const productoId = document.getElementById("txtProducto").value;
         const productoNombre = document.getElementById("txtProducto").selectedOptions[0].text;
         const presentacionId = document.getElementById("txtPresentacion").value;
@@ -61,10 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Calcular subtotal
         const subtotal = cantidad * precioUnitario;
 
-        // Agregar al carrito
         carrito.push({
             productoId,
             productoNombre,
@@ -75,10 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
             subtotal,
         });
 
-        // Actualizar UI
         renderCarrito();
     });
-
+    
+    //Actualizar la Vista del Carrito
     function renderCarrito() {
         productosLista.innerHTML = "";
 
@@ -107,9 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         totalSpan.textContent = `S/ ${total.toFixed(2)}`;
     }
+    
+    //Confirmar Venta
     document.getElementById('confirmar-venta').addEventListener('click', function() {
         document.getElementById('formVenta').submit(); // Envía el formulario
     });
+    
+    //Eliminar Producto del Carrito
     window.eliminarProducto = (index) => {
         carrito.splice(index, 1);
         renderCarrito();
