@@ -2,7 +2,6 @@ package controller;
 
 import dao.ReporteDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,11 +27,25 @@ public class ListarReporteEmpleado extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String fechaInicio = request.getParameter("txtFechaInicio");
+        String fechaFin = request.getParameter("txtFechaFin");
+        String modalidadVenta = request.getParameter("txtModalidad");
+
+        if (fechaInicio != null && fechaInicio.trim().isEmpty()) {
+            fechaInicio = null;
+        }
+        if (fechaFin != null && fechaFin.trim().isEmpty()) {
+            fechaFin = null;
+        }
+        if (modalidadVenta != null && modalidadVenta.trim().isEmpty()) {
+            modalidadVenta = null;
+        }
+
         ReporteDAO rptDAO = new ReporteDAO();
-        List<Reporte> Lista = rptDAO.ListarReportes();
-        
-        request.setAttribute("aLista", Lista);
-        request.getRequestDispatcher("Administrador-Reporte.jsp").forward(request, response);
+        List<Reporte> lista = rptDAO.MostrarReportes(fechaInicio, fechaFin, modalidadVenta);
+
+        request.setAttribute("aLista", lista);
+        request.getRequestDispatcher("Empleado-Reporte.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

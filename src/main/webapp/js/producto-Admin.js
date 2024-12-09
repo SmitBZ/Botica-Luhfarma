@@ -39,16 +39,14 @@ window.addEventListener('resize', function() {
 // ================================
 // Modal Functions
 // ================================
-function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-    document.getElementById(modalId).classList.add('flex');
+function openModal() {
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('hidden');
 }
-
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-    document.getElementById(modalId).classList.remove('flex');
+function closeModal() {
+    const modal = document.getElementById('productModal');
+    modal.classList.add('hidden');
 }
-
 // ================================
 // Product Form Handling
 // ================================
@@ -65,53 +63,22 @@ function editProduct(id) {
     // Lógica para cargar los datos del producto
 }
 
-let productToDelete = null;
+let currentProductoID = null;
 
-function deleteProduct(id) {
-    productToDelete = id;
-    openModal('deleteModal');
+function openDeleteModal(productoId) {
+    currentProductoID = productoId; // Guarda el ID de la categoría
+    document.getElementById('deleteProductoModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    currentProductoID = null; // Limpia el ID de la categoría
+    document.getElementById('deleteProductoModal').classList.add('hidden');
 }
 
 function confirmDelete() {
-    if (productToDelete) {
-        // Lógica para eliminar el producto
-        closeModal('deleteModal');
-        // Refrescar la tabla o mostrar mensaje de éxito
-        productToDelete = null;
+    if (currentProductoID) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarProducto?idProducto=${currentProductoID}`;
     }
+    closeDeleteModal();
 }
-
-// ================================
-// Search Function
-// ================================
-function searchProducts() {
-    const searchTerm = document.querySelector('input[type="text"]').value.toLowerCase();
-    const rows = document.querySelectorAll('tbody tr');
-    
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? '' : 'none';
-    });
-}
-
-// ================================
-// Export Function
-// ================================
-function exportToExcel() {
-    // Lógica para exportar a Excel
-    alert('Exportando a Excel...');
-}
-
-// ================================
-// Notifications
-// ================================
-function showNotification(message, type = 'success') {
-    // Implementar sistema de notificaciones
-}
-
-// ================================
-// Initialize
-// ================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar cualquier funcionalidad necesaria
-});

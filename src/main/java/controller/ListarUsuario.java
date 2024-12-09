@@ -27,8 +27,18 @@ public class ListarUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nombre = request.getParameter("txtNombre");  // Parámetro de nombre
+        String rol = request.getParameter("txtRol");  
+        
+        if (nombre != null && nombre.trim().isEmpty()) {
+            nombre = null;
+        }
+        if (rol != null && rol.trim().isEmpty()) {
+            rol = null;
+        }
+        
         UsuarioDAO usd = new UsuarioDAO();
-        List<Usuario> Lista = usd.ListarUsuarios();
+        List<Usuario> Lista = usd.ListarUsuarios(nombre, rol);
         request.setAttribute("aLista", Lista);
         request.getRequestDispatcher("Administrador-Usuario.jsp").forward(request, response);
     }

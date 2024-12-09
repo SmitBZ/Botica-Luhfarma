@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CategoriaDAO;
 import dao.InventarioDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Categoria;
 import model.Inventario;
 
 /**
@@ -27,13 +29,29 @@ public class ListarInventarioEmpleado extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String categoria = request.getParameter("txtCategoria");
+        String estadoStock = request.getParameter("txtEstado");
+        String nombreProducto = request.getParameter("txtNombre");
+
+        if (categoria == null || categoria.isEmpty() || categoria.equals("todo")) {
+            categoria = "Todo";
+        }
+        if (estadoStock != null && estadoStock.isEmpty()) {
+            estadoStock = null;
+        }
+        if (nombreProducto != null && nombreProducto.isEmpty()) {
+            nombreProducto = null;
+        }
+
         InventarioDAO dao = new InventarioDAO();
-        List<Inventario> inV = dao.Mostrar();
+        List<Inventario> inV = dao.MostrarBusqueda(categoria, estadoStock, nombreProducto);
 
-        // Pasar la lista de presentaciones a la vista
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        List<Categoria> aLista = categoriaDAO.Mostrar();
+
         request.setAttribute("aInv", inV);
+        request.setAttribute("aLista", aLista); // Pasar la lista de categorías a la vista JSP
 
-        // Redirigir a la página JSP donde se mostrará la lista
         request.getRequestDispatcher("Empleado-Inventario.jsp").forward(request, response);
     }
 

@@ -4,8 +4,10 @@ C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHF
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarAlmacen.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarCategoria.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarPresentacion.java
+C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarProducto.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarProveedor.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\EliminarUsuario.java
+C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ExportarUsuario.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\IniciarSesion.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarAlmacen.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarCategoria.java
@@ -18,6 +20,7 @@ C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHF
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarReporteEmpleado.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarUsuario.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarVenta.java
+C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\ListarVentaEmpleado.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarAlmacen.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarCategoria.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarCliente.java
@@ -26,6 +29,7 @@ C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHF
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarProveedor.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarUsuario.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarVenta.java
+C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\controller\RegistrarVentaEmpleado.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\dao\AlmacenDAO.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\dao\CategoriaDAO.java
 C:\Users\Smit1\OneDrive\Documentos\Proyectos\BOTICA  LUHFARMA\CODIGO\BOTICA-LUHFARMA\src\main\java\dao\InventarioDAO.java

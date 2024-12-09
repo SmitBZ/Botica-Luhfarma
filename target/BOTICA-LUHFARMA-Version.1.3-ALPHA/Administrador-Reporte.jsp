@@ -53,32 +53,31 @@
     </header>
     <br><br><br><br><br>
     <div class="container">        
-        <div class="mb-6">
-    <form action="${pageContext.request.contextPath}/ReporteBuscar" method="get" class="flex items-center justify-center space-x-4">
-        <!-- Campo de fecha de inicio -->
-        <div class="relative">
-            <label for="fechaInicio" class="block text-gray-700">Fecha Inicio:</label>
-            <input type="date" name="fechaInicio" id="fechaInicio" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
-        </div>
-
-        <!-- Campo de fecha de fin -->
-        <div class="relative">
-            <label for="fechaFin" class="block text-gray-700">Fecha Fin:</label>
-            <input type="date" name="fechaFin" id="fechaFin" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
-        </div>
-
-        <!-- Campo de ID de Cliente -->
-        <div class="relative">
-            <label for="idCliente" class="block text-gray-700">ID Cliente:</label>
-            <input type="number" name="idCliente" id="idCliente" placeholder="ID Cliente" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
-        </div>
+    <div class="mb-6">
+            <form action="${pageContext.request.contextPath}/ListarReporte" method="post" class="flex items-center justify-center space-x-4">
+                <div class="relative">
+                    <label for="fechaInicio" class="block text-gray-700">Fecha:</label>
+                    <input type="date" name="txtFechaInicio" id="fechaInicio" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                </div>
+                <div class="relative">
+                    <label for="fechaFin" class="block text-gray-700">Fecha Fin:</label>
+                    <input type="date" name="txtFechaFin" id="fechaFin" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                </div>
+                <div class="relative">
+                    <label for="modalidadVenta" class="block text-gray-700">Modalidad:</label>
+                    <select id="modalidadVenta" name="txtModalidad" class="p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <option value="">Filtrar</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Linea">En Línea</option>
+                    </select>
+                </div>
 
         <!-- Botón de búsqueda -->
         <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded-full hover:bg-blue-700 focus:outline-none transition duration-300">
             Buscar
         </button>
     </form>
-</div>
+    </div>
 
         <div class="table-container">
             <table>

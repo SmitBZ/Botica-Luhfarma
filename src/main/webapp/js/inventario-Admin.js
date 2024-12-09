@@ -1,6 +1,3 @@
-// ================================
-// Sidebar Functions
-// ================================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -9,7 +6,6 @@ function toggleSidebar() {
     body.classList.toggle('sidebar-closed');
 }
 
-// Cerrar sidebar en dispositivos móviles al hacer clic fuera
 function closeSidebarOnClickOutside(event) {
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.querySelector('.menu-btn');
@@ -22,7 +18,6 @@ function closeSidebarOnClickOutside(event) {
     }
 }
 
-// Ajustar sidebar al redimensionar la ventana
 function adjustSidebarOnResize() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -36,14 +31,11 @@ function adjustSidebarOnResize() {
     }
 }
 
-// ================================
-// Toggle Product Details
-// ================================
 function toggleDetails(button) {
-            const details = button.nextElementSibling;
-            const icon = button.querySelector('i');
+    const details = button.nextElementSibling;
+    const icon = button.querySelector('i');
             
-            button.classList.toggle('active');
-            details.classList.toggle('show');
-        }
+    button.classList.toggle('active');
+    details.classList.toggle('show');
+}
 

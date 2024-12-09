@@ -36,7 +36,7 @@
             <a href="ListarInventarioEmpleado" class="nav-link flex items-center text-gray-700 hover:text-blue-600">
                 <i class="fas fa-box mr-3"></i> Inventario
             </a>
-            <a href="Empleado-Principal.jsp" class="nav-link flex items-center text-gray-700 hover:text-blue-600">
+            <a href="ListarInventarioEmpleado" class="nav-link flex items-center text-gray-700 hover:text-blue-600">
                 <i class="fas fa-shopping-cart mr-3"></i> Ventas
             </a>
             

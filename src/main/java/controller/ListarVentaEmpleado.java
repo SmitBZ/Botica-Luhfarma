@@ -40,8 +40,8 @@ public class ListarVentaEmpleado extends HttpServlet {
         PresentacionDAO dao = new PresentacionDAO();
         List<Presentacion> Presentacion = dao.Mostrar();
 
-        request.setAttribute("aPres", Presentacion);
-        request.setAttribute("aPrd", Producto);
+        request.setAttribute("apres", Presentacion);
+        request.setAttribute("pro", Producto);
         request.getRequestDispatcher("Empleado-Principal.jsp").forward(request, response);
     }
 

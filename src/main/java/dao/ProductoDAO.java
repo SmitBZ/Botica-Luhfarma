@@ -120,6 +120,39 @@ public class ProductoDAO {
         return listaProductos;
     }
     
+    public List<Producto> MostrarProducto(String nombreProducto) {
+        consulta = "CALL sp_Filtrar_Producto(?);";
+        List<Producto> listaProductos = new ArrayList<>();
+        
+        try {
+            Connection cn = Conexion.getConnection();
+            CallableStatement cst = cn.prepareCall(consulta);
+            
+            cst.setString(1, nombreProducto);
+            
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombre(rs.getString("Producto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setFechaP(rs.getDate("fechaprodu").toLocalDate());
+                producto.setFechaV(rs.getDate("fechacadu").toLocalDate());
+                producto.setImg(rs.getString("imagen"));
+                producto.setAlmacen(rs.getString("Almacen"));
+                producto.setCategoria(rs.getString("Categoria"));
+                producto.setPresentacion(rs.getString("Presentacion"));
+
+                listaProductos.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar productos: " + e.getMessage());
+        }
+        return listaProductos;
+    }
+    
     public int ProductosVencer() {
         int proCli = 0;
         consulta = "call sp_Productos_Vencer();";

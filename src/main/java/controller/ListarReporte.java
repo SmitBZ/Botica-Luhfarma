@@ -27,10 +27,24 @@ public class ListarReporte extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String fechaInicio = request.getParameter("txtFechaInicio");
+        String fechaFin = request.getParameter("txtFechaFin");
+        String modalidadVenta = request.getParameter("txtModalidad");
+
+        if (fechaInicio != null && fechaInicio.trim().isEmpty()) {
+            fechaInicio = null;
+        }
+        if (fechaFin != null && fechaFin.trim().isEmpty()) {
+            fechaFin = null;
+        }
+        if (modalidadVenta != null && modalidadVenta.trim().isEmpty()) {
+            modalidadVenta = null;
+        }
+
         ReporteDAO rptDAO = new ReporteDAO();
-        List<Reporte> Lista = rptDAO.ListarReportes();
-        
-        request.setAttribute("aLista", Lista);
+        List<Reporte> lista = rptDAO.MostrarReportes(fechaInicio, fechaFin, modalidadVenta);
+
+        request.setAttribute("aLista", lista);
         request.getRequestDispatcher("Administrador-Reporte.jsp").forward(request, response);
     }
 

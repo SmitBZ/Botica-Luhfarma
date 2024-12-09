@@ -46,7 +46,18 @@ window.addEventListener('resize', function() {
             document.getElementById(modalId).classList.remove('show');
         }
 
-        // Funciones de Proveedor
+
+function openModal() {
+    const modal = document.getElementById('proveedorModal');
+    modal.classList.remove('hidden');
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.add('hidden');
+}
+
+
 function editProveedor(button) {
     // Obtener datos del proveedor desde los atributos del botón
     const id = button.getAttribute('data-id');
@@ -92,11 +103,5 @@ function confirmDelete() {
     closeDeleteModal();
 }
 
-        // Función para exportar a Excel
-        function exportToExcel() {
-            // Aquí iría la lógica para exportar a Excel
-            alert('Exportando datos a Excel...');
-        }
-        
         
         

@@ -54,8 +54,15 @@
     <main class="main-content">
         <div class="bg-white rounded-lg shadow-sm">
             <div class="p-4 flex justify-between items-center border-b">
-                <h2 class="text-xl font-bold text-gray-800">Gestión de Proveedores</h2>
-                <button onclick="openModal('proveedorModal')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"><i class="fas fa-plus mr-2"></i>Nuevo Proveedor</button>
+                <form action="ListarProveedor" method="post" class="flex items-center justify-center p-4">
+                    <div class="relative w-full">
+                        <input type="text" name="txtBuscar" style="width: 600px;" placeholder="Buscar por nombre" class="w-full p-3 pl-4 pr-16 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"/>
+                        <button type="submit" class="absolute right-0 top-0 bottom-0 px-4 py-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+                <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"><i class="fas fa-plus mr-2"></i>Nuevo Proveedor</button>
             </div>
         
             <div class="overflow-x-auto">
@@ -84,7 +91,7 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= proveedor.getEntidad() %></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
-                                <button class="text-blue-600 hover:text-blue-900" onclick="editProveedor(this)" data-id="<%= proveedor.getIdProveedor() %>"data-nombre="<%= proveedor.getNombre() %>"data-ruc="<%= proveedor.getRuc() %>"data-correo="<%= proveedor.getCorreo() %>"data-telefono="<%= proveedor.getTelefono() %>"data-direccion="<%= proveedor.getDireccion() %>"data-entidad="<%= proveedor.getEntidad() %>"><i class="fas fa-edit"></i></button>
+                                <button class="text-blue-600 hover:text-blue-900" onclick="editProveedor()" data-id="<%= proveedor.getIdProveedor() %>"data-nombre="<%= proveedor.getNombre() %>"data-ruc="<%= proveedor.getRuc() %>"data-correo="<%= proveedor.getCorreo() %>"data-telefono="<%= proveedor.getTelefono() %>"data-direccion="<%= proveedor.getDireccion() %>"data-entidad="<%= proveedor.getEntidad() %>"><i class="fas fa-edit"></i></button>
                                 <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= proveedor.getIdProveedor() %>)"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
@@ -97,49 +104,49 @@
     </main>
 
     
-    <div id="proveedorModal" class="modal">
-        <div class="modal-content">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold text-gray-900">Nuevo Proveedor</h3>
-                    <button onclick="closeModal('proveedorModal')" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
-                </div>
-                <form id="proveedorForm" method="post" action="${pageContext.request.contextPath}/RegistrarProveedor">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                            <input type="text" name="txtNombre" id="txtNombre" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
-                            <input type="text" name="txtDireccion" id="txtDireccion" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" name="txtCorreo" id="txtCorreo" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                            <input type="tel" name="txtTelefono" id="txtTelefono"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">RUC</label>
-                            <input type="text" name="txtRuc" id="txtRuc" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Entidad</label>
-                            <select name="txtEntidad" id="txtEntidad"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                                <option value="Publica">Publica</option>
-                                <option value="Privada">Privada</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" onclick="closeModal('proveedorModal')" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Guardar</button>
-                    </div>
-                </form>
+    <div id="proveedorModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">Nuevo Proveedor</h3>
+                <button onclick="closeModal('proveedorModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+            <form id="proveedorForm" method="post" action="${pageContext.request.contextPath}/RegistrarProveedor">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                        <input type="text" name="txtNombre" id="txtNombre" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                        <input type="text" name="txtDireccion" id="txtDireccion" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" name="txtCorreo" id="txtCorreo" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                        <input type="tel" name="txtTelefono" id="txtTelefono"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">RUC</label>
+                        <input type="text" name="txtRuc" id="txtRuc" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Entidad</label>
+                        <select name="txtEntidad" id="txtEntidad"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="Publica">Publica</option>
+                            <option value="Privada">Privada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('proveedorModal')" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
                     

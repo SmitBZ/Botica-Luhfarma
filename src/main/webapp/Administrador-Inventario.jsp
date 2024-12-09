@@ -1,3 +1,4 @@
+<%@page import="model.Categoria"%>
 <%@page import="model.Inventario"%>
 <%@page import="java.util.List"%>
 <%@ page session="true" %>
@@ -53,35 +54,63 @@
         <a href="index.jsp" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
     </header>
     
-    
-    
-     <div class="container">
+    <div class="container">
         <div class="filters">
-            <div class="filter-item">
-                <div class="filter-title">Filtrar por:</div>
-                <select id="filter-by" onchange="filterProducts()">
-                    <option value="todo">Todo</option>
-                    <option value="medicamentos">Medicamentos</option>
-                    <option value="salud sexual">Salud sexual</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <div class="filter-title">Estado:</div>
-                <select id="status" onchange="filterProducts()">
-                    <option value="todos">Filtrar</option>
-                    <option value="en-stock">En Stock</option>
-                    <option value="sin-stock">Sin Stock</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <div class="filter-title">Buscar:</div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" 
-                           placeholder="Buscar producto por nombre..." 
-                           oninput="filterProducts()">
-                    <button><i class="fas fa-search"></i></button>
+            <form method="post" action="ListarInventario">
+                <div class="filter-item">
+                    <div class="filter-title">
+                        Filtrar por:
+                    </div>
+                    <select id="filter-by" name="txtCategoria">
+                        <option value="Todo">
+                            Todo
+                        </option>
+                        <% 
+                            List<Categoria> aLista = (List<Categoria>) request.getAttribute("aLista"); 
+                            if (aLista != null && !aLista.isEmpty()) {
+                                for (Categoria ct : aLista) {
+                        %>
+                        <option value="<%= ct.getNombre() %>"><%= ct.getNombre() %></option>
+                        <% 
+                                }
+                            } else { 
+                        %>
+                        <option disabled>
+                            No hay categorías registradas disponibles
+                        </option>
+                        <% 
+                            } 
+                        %>
+                    </select>
                 </div>
-            </div>
+                <div class="filter-item">
+                    <div class="filter-title">
+                        Estado:
+                    </div>
+                    <select id="status"  name="txtEstado">
+                        <option value="todos">
+                            Filtrar
+                        </option>
+                        <option value="En Stock">
+                            En Stock
+                        </option>
+                        <option value="Sin Stock">
+                            Sin Stock
+                        </option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <div class="filter-title">
+                        Buscar:
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" name="txtNombre"placeholder="Buscar producto por nombre...">
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div class="products-grid">

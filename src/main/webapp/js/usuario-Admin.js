@@ -53,3 +53,7 @@ function confirmDelete() {
     }
     closeDeleteModal();
 }
+
+function toggleAddUserModal() {
+    document.getElementById('addUserModal').style.display = 'flex';
+}

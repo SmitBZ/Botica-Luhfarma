@@ -17,6 +17,8 @@ controller\ListarReporteEmpleado.class
 dao\VentaDAO.class
 controller\EliminarAlmacen.class
 model\Producto.class
+controller\ListarVentaEmpleado.class
+controller\RegistrarVentaEmpleado.class
 controller\CantidadClientes.class
 controller\EliminarCategoria.class
 dao\PresentacionDAO.class
@@ -39,10 +41,12 @@ controller\EliminarPresentacion.class
 controller\ListarInventario.class
 model\Almacen.class
 service\ReportePDF.class
+controller\EliminarProducto.class
 controller\RegistrarVenta.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class
+controller\ExportarUsuario.class
 controller\EliminarUsuario.class
 com\botica\luhfarma\resources\JakartaEE11Resource.class
 controller\ListarReporte.class

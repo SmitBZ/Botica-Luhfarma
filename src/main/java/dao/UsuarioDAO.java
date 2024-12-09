@@ -133,15 +133,19 @@ public class UsuarioDAO {
      * Metodo para mostrar los usuarios registrado de la base de datos
      * @return retorna la lista de los usuarios
      */
-    public List<Usuario> ListarUsuarios(){
+    public List<Usuario> ListarUsuarios(String nombre, String rol){
         List<Usuario> listaUsuarios = new ArrayList<>();
-        Consulta = "call sp_Listar_Usuario();";
+        Consulta = "call sp_Listar_Usuario(?,?);";
         
         try{
             Connection cn = Conexion.getConnection();
-            Statement cst = cn.createStatement();
-            ResultSet rs = cst.executeQuery(Consulta);
+            CallableStatement cst = cn.prepareCall(Consulta);
             
+            cst.setString(1, nombre);
+            cst.setString(2, rol);
+            
+            ResultSet rs = cst.executeQuery();
+
             while (rs.next()) {
                 Usuario us = new Usuario();
                 us.setIdUsuario(rs.getInt("idUsuario"));

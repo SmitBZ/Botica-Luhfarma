@@ -61,12 +61,14 @@
                 <h2 class="text-xl font-bold text-gray-800">Lista de Productos</h2>
             </div>
             <div class="p-4 flex justify-between items-center">
+                <form method="post" action="ListarProductos">
+                    <div class="flex space-x-2">
+                        <input type="text"  name="txtNombre" placeholder="Buscar productos..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button class="btn btn-primary"><i class="fas fa-search mr-2"></i>Buscar</button>
+                    </div>
+                </form>
                 <div class="flex space-x-2">
-                    <input type="text" placeholder="Buscar productos..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button class="btn btn-primary"><i class="fas fa-search mr-2"></i>Buscar</button>
-                </div>
-                <div class="flex space-x-2">
-                    <button class="btn btn-primary" onclick="openModal('productModal')"><i class="fas fa-plus mr-2"></i>Nuevo Producto</button>
+                    <button class="btn btn-primary" onclick="openModal()"><i class="fas fa-plus mr-2"></i>Nuevo Producto</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -102,8 +104,7 @@
                             <td><%=pr.getPresentacion()%></td>
                             <td class="flex space-x-2">
                                 <button class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
-                                <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
-                                <button class="text-gray-600 hover:text-gray-800"><i class="fas fa-eye"></i></button>
+                                <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= pr.getIdProducto() %>)"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                         <% }} else { %><td colspan="10" class="text-gray-600 hover:text-gray-800"><center>Ningun producto registrado</center></td><% } %>
@@ -113,11 +114,13 @@
             </div>
         </div>
     
-    <div id="productModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center">
+    <div id="productModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-800" id="modalTitle">Nuevo Producto</h3>
-                <button onclick="closeModal('productModal')" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times"></i></button>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <form id="productForm" class="space-y-4" method="post" action="${pageContext.request.contextPath}/RegistrarProducto" enctype="multipart/form-data">
                 <div class="grid grid-cols-2 gap-4">
@@ -184,25 +187,22 @@
                     <textarea name="txtDescripcion" id="txtDescripcion" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal('productModal')" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancelar</button>
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Guardar Producto</button>
                 </div>
             </form>
         </div>
     </div>
     
-    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-            <div class="text-center">
-                <i class="fas fa-exclamation-triangle text-5xl text-red-600 mb-4"></i>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">¿Confirmar Eliminación?</h3>
-                <p class="text-gray-600 mb-6">Esta acción no se puede deshacer. ¿Está seguro de eliminar este producto?</p>
+    <div id="deleteProductoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar producto</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar el producto seleccionado?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                </div>
             </div>
-            <div class="flex justify-center space-x-3">
-                <button onclick="closeModal('deleteModal')" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancelar</button>
-                <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Sí, Eliminar</button>
-            </div>
-        </div>
     </div>
 
     <script src="${pageContext.request.contextPath}/js/producto-Admin.js"></script>
