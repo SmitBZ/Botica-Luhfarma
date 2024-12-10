@@ -30,6 +30,13 @@ public class ListarCategoria extends HttpServlet {
         CategoriaDAO alm = new CategoriaDAO();
         List<Categoria> Lista = alm.Mostrar();
         
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
+        
         request.setAttribute("aLista", Lista);
         request.getRequestDispatcher("Administrador-Categorias.jsp").forward(request, response);
     }

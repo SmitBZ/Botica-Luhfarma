@@ -2,7 +2,6 @@ package controller;
 
 import dao.PresentacionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -48,11 +47,13 @@ public class RegistrarPresentacion extends HttpServlet {
 
         // Redirigir según el resultado
         if (registrado) {
-            request.setAttribute("mensaje", "La presentación fue registrada exitosamente.");
+            request.setAttribute("message", "Se registro correctamente la presentación.");
+            request.setAttribute("messageType", "success");
             request.getRequestDispatcher("ListarPresentaciones").forward(request, response);
         } else {
-            request.setAttribute("mensaje", "Hubo un error al registrar la presentación.");
-            request.getRequestDispatcher("Administrador-Presentaciones.jsp").forward(request, response);
+            request.setAttribute("message", "Hubo un error al registrar la presentación.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarPresentaciones").forward(request, response);
         }
     }
 

@@ -32,61 +32,54 @@ public class RegistrarProducto extends HttpServlet {
      */
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String nombre = request.getParameter("txtNombre");
-            String precioStr = request.getParameter("txtPrecio");
-            String descripcion = request.getParameter("txtDescripcion");
-            String fechaProduStr = request.getParameter("txtFechaProdu");
-            String fechaCaduStr = request.getParameter("txtFechaVen");
-            String almacenStr = request.getParameter("txtAlmacen");
-            String categoriaStr = request.getParameter("txtCategoria");
-            String presentacionStr = request.getParameter("txtPresentacion");
-            String stockStr = request.getParameter("txtCantidad");
+        String nombre = request.getParameter("txtNombre");
+        String precioStr = request.getParameter("txtPrecio");
+        String descripcion = request.getParameter("txtDescripcion");
+        String fechaProduStr = request.getParameter("txtFechaProdu");
+        String fechaCaduStr = request.getParameter("txtFechaVen");
+        String almacenStr = request.getParameter("txtAlmacen");
+        String categoriaStr = request.getParameter("txtCategoria");
+        String presentacionStr = request.getParameter("txtPresentacion");
+        String stockStr = request.getParameter("txtCantidad");
+        if (nombre == null || precioStr == null || descripcion == null ||
+            fechaProduStr == null || fechaCaduStr == null ||
+            almacenStr == null || categoriaStr == null || presentacionStr == null || stockStr == null) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios.");
+        }
 
-            if (nombre == null || precioStr == null || descripcion == null || 
-                fechaProduStr == null || fechaCaduStr == null || 
-                almacenStr == null || categoriaStr == null || presentacionStr == null || stockStr == null) {
-                throw new IllegalArgumentException("Todos los campos son obligatorios.");
-            }
-
-            // Manejo de imagen
-            String rutaImagen = guardarImagen(request.getPart("txtImagen"));
+        String rutaImagen = guardarImagen(request.getPart("txtImagen"));
 
             // Validaciones y conversiones
-            double precio = Double.parseDouble(precioStr);
-            int stock = Integer.parseInt(stockStr);
-            LocalDate fechaprodu = LocalDate.parse(fechaProduStr);
-            LocalDate fechacadu = LocalDate.parse(fechaCaduStr);
+        double precio = Double.parseDouble(precioStr);
+        int stock = Integer.parseInt(stockStr);
+        LocalDate fechaprodu = LocalDate.parse(fechaProduStr);
+        LocalDate fechacadu = LocalDate.parse(fechaCaduStr);
 
             // Creación de producto
-            Producto producto = new Producto();
-            producto.setNombre(nombre);
-            producto.setPrecio(precio);
-            producto.setDescripcion(descripcion);
-            producto.setFechaP(fechaprodu);
-            producto.setFechaV(fechacadu);
-            producto.setImg(rutaImagen);
-            producto.setAlmacen(almacenStr);
-            producto.setCategoria(categoriaStr);
-            producto.setPresentacion(presentacionStr);
-            producto.setStock(stock);
+        Producto producto = new Producto();
+        producto.setNombre(nombre);
+        producto.setPrecio(precio);
+        producto.setDescripcion(descripcion);
+        producto.setFechaP(fechaprodu);
+        producto.setFechaV(fechacadu);
+        producto.setImg(rutaImagen);
+        producto.setAlmacen(almacenStr);
+        producto.setCategoria(categoriaStr);
+        producto.setPresentacion(presentacionStr);
+        producto.setStock(stock);
 
             // Registro en la base de datos
-            ProductoDAO productoDAO = new ProductoDAO();
-            boolean registrado = productoDAO.Registrar(producto);
+        ProductoDAO productoDAO = new ProductoDAO();
+        boolean registrado = productoDAO.Registrar(producto);
 
-            // Redirección según el resultado
-            if (registrado) {
-                response.sendRedirect("ListarProductos");
-            } else {
-                request.setAttribute("errorMsg", "Error al registrar producto");
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
-            // Manejo de excepciones
-            e.printStackTrace();
-            request.setAttribute("errorMsg", "Error al procesar la solicitud: " + e.getMessage());
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+        if (registrado) {
+            request.setAttribute("message", "Se agrego correctamente el producto");
+            request.setAttribute("messageType", "success");
+            request.getRequestDispatcher("ListarProductos").forward(request, response);
+        } else {
+            request.setAttribute("message", "No se pudo agregar el producto. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarProductos").forward(request, response);
         }
     }
     

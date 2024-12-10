@@ -91,7 +91,7 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= proveedor.getEntidad() %></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
-                                <button class="text-blue-600 hover:text-blue-900" onclick="editProveedor()" data-id="<%= proveedor.getIdProveedor() %>"data-nombre="<%= proveedor.getNombre() %>"data-ruc="<%= proveedor.getRuc() %>"data-correo="<%= proveedor.getCorreo() %>"data-telefono="<%= proveedor.getTelefono() %>"data-direccion="<%= proveedor.getDireccion() %>"data-entidad="<%= proveedor.getEntidad() %>"><i class="fas fa-edit"></i></button>
+                                <button class="text-blue-600 hover:text-blue-900" onclick="openEditProveedor('<%= proveedor.getIdProveedor() %>', '<%= proveedor.getNombre()%>', '<%= proveedor.getRuc() %>', '<%= proveedor.getCorreo()%>', '<%= proveedor.getTelefono()%>', '<%= proveedor.getDireccion()%>', '<%= proveedor.getEntidad()%>')"><i class="fas fa-edit"></i></button>
                                 <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= proveedor.getIdProveedor() %>)"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
@@ -108,7 +108,7 @@
         <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-900">Nuevo Proveedor</h3>
-                <button onclick="closeModal('proveedorModal')" class="text-gray-500 hover:text-gray-700">
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -143,13 +143,59 @@
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal('proveedorModal')" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
                     
+    <div id="provedorEdit" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">Nuevo Proveedor</h3>
+                <button onclick="closeEditProveedor()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="proveedorFormEdit" method="post" action="${pageContext.request.contextPath}/EditarProveedor">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="hidden" id="editId" name="idProveedor">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                        <input type="text" name="nombre" id="editNombre" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                        <input type="text" name="direccion" id="editDireccion" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" name="correo" id="editCorreo" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                        <input type="tel" name="telefono" id="editTelefono"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">RUC</label>
+                        <input type="text" name="ruc" id="editRuc" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Entidad</label>
+                        <select name="entidad" id="editEntidad"class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="Publica">Publica</option>
+                            <option value="Privada">Privada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="closeEditProveedor()" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
                     
     <div id="deleteProveedorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
@@ -161,7 +207,18 @@
                 </div>
             </div>
     </div>
-                    
+                
     <script src="${pageContext.request.contextPath}/js/proveedor-Admin.js"></script>
+    <% 
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) { 
+    %>
+    <script>
+        showNotification("<%= message %>", "<%= messageType %>");
+    </script>
+    <%
+        }
+    %>
 </body>
 </html>

@@ -32,7 +32,7 @@ public class EliminarProveedor extends HttpServlet {
         try {
             idProveedor = Integer.parseInt(idProveedorParam);
         } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de almacén no válido");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de proveedor no válido");
             return;
         }
 
@@ -40,9 +40,13 @@ public class EliminarProveedor extends HttpServlet {
         boolean eliminado = prv.Eliminar(idProveedor);
 
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarProveedor?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente el proveedor");
+            request.setAttribute("messageType", "success"); // Indica que es un mensaje de éxito
+            request.getRequestDispatcher("ListarProveedor").forward(request, response);;
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarProveedor?error=NoSePudoEliminar");
+            request.setAttribute("message", "No se pudo eliminar el proveedor. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarProveedor").forward(request, response);
         }
     }
 

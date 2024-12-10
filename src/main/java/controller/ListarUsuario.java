@@ -37,6 +37,13 @@ public class ListarUsuario extends HttpServlet {
             rol = null;
         }
         
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
+        
         UsuarioDAO usd = new UsuarioDAO();
         List<Usuario> Lista = usd.ListarUsuarios(nombre, rol);
         request.setAttribute("aLista", Lista);

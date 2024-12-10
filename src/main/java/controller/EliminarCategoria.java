@@ -37,11 +37,15 @@ public class EliminarCategoria extends HttpServlet {
 
         CategoriaDAO categoriaDao = new CategoriaDAO();
         boolean eliminado = categoriaDao.Eliminar(idCategoria);
-
+        
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarCategoria?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente la categoria.");
+            request.setAttribute("messageType", "success");
+            request.getRequestDispatcher("ListarCategoria").forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarCategoria?error=NoSePudoEliminar");
+            request.setAttribute("message", "No se pudo eliminar la categoria. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarCategoria").forward(request, response);
         }
     }
 

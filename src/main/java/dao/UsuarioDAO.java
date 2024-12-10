@@ -203,4 +203,30 @@ public class UsuarioDAO {
         }
         return exitoso;
     }
+    
+    public boolean EditarUsuario(Usuario us) {
+        boolean exitoso = false;
+        Consulta = "call sp_Editar_Usuario(?,?,?,?,?,?,?);";
+
+        try {
+            Connection cn = Conexion.getConnection();
+            CallableStatement cst = cn.prepareCall(Consulta);
+            
+            cst.setInt(1, us.getIdUsuario());
+            cst.setString(2, us.getNombre());
+            cst.setString(3, us.getApellido());
+            cst.setString(4, us.getCorreo());
+            cst.setString(5, us.getTelefono());
+            cst.setString(6, us.getContraseña());
+            cst.setString(7, us.getRol());
+            
+            cst.executeUpdate();
+            exitoso = true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return exitoso;
+    }
+
 }

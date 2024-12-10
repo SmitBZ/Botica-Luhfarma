@@ -39,9 +39,13 @@ public class EliminarAlmacen extends HttpServlet {
         boolean eliminado = almacenDAO.Eliminar(idAlmacen);
 
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarAlmacen?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente el almacén.");
+            request.setAttribute("messageType", "success"); // Indica que es un mensaje de éxito
+            request.getRequestDispatcher("ListarAlmacen").forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarAlmacen?error=NoSePudoEliminar");
+            request.setAttribute("message", "No se pudo eliminar el almacén. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error"); // Indica que es un mensaje de error
+            request.getRequestDispatcher("ListarAlmacen").forward(request, response);
         }
     }
 

@@ -37,7 +37,7 @@ public class AlmacenDAO {
     }
     
     public boolean Editar(Almacen ct) {
-        Consulta = "call sp_Editar_Almacen(?,?,?);";
+        Consulta = "call sp_Editar_Almacen(?,?,?,?);";
         boolean exitoso = false;
 
         try (Connection cn = Conexion.getConnection();

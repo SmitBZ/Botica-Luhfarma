@@ -35,6 +35,12 @@ public class ListarProveedor extends HttpServlet {
             nombreProveedor = "";
         }
         
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
         
         ProveedorDAO proveedorDAO = new ProveedorDAO();
         List<Proveedor> Lista = proveedorDAO.MostrarProveedor(nombreProveedor);

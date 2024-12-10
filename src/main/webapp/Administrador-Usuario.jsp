@@ -107,7 +107,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getTelefono() %></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getContraseña()%></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit mr-1"></i></button>
+                                <button class="text-blue-500 hover:text-blue-700" onclick="openEditModal('<%= us.getIdUsuario() %>', '<%= us.getNombre() %>', '<%= us.getApellido() %>', '<%= us.getCorreo() %>', '<%= us.getTelefono() %>', '<%= us.getContraseña() %>','<%= us.getRol() %>')"><i class="fas fa-edit mr-1"></i></button>
                                 <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= us.getIdUsuario() %>)"><i class="fas fa-trash-alt mr-1"></i></button>
                             </td>
                         </tr>
@@ -129,7 +129,7 @@
 
     <div id="addUserModal" class="modal hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
         <div class="modal-content bg-white rounded-lg p-8 w-full max-w-2xl">
-            <span class="close float-right cursor-pointer" onclick="document.getElementById('addUserModal').style.display='none'">&times;</span>
+            <span class="close float-right cursor-pointer" onclick="toggleCloseAddUserModal()">&times;</span>
             <h2 class="text-2xl font-bold mb-6">Agregar Usuario</h2>
             <form action="${pageContext.request.contextPath}/RegistrarUsuario" method="post">
                 <input type="hidden" name="action" value="add">
@@ -168,7 +168,51 @@
             </form>
         </div>
     </div>
-    
+                
+    <div id="editUserModal" class="modal hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+        <div class="modal-content bg-white rounded-lg p-8 w-full max-w-2xl">
+            <span class="close float-right cursor-pointer" onclick="closeEditModal()">&times;</span>
+            <h2 class="text-2xl font-bold mb-6">Agregar Usuario</h2>
+            <form action="${pageContext.request.contextPath}/EditarUsuario" method="post">
+                <input type="hidden" name="action" value="add">
+                <div class="grid grid-cols-2 gap-6">
+                    <input type="hidden" id="editUsuario" name="idUsuario">
+                    <div>
+                        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre:</label>
+                        <input type="text" name="nombre" id="editNombre" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="apellido" class="block text-gray-700 font-medium mb-2">Apellido:</label>
+                        <input type="text" name="apellido" id="editApellido" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email:</label>
+                        <input type="email" name="correo" id="editCorreo" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-gray-700 font-medium mb-2">Teléfono:</label>
+                        <input type="text" name="telefono" id="editTelefono" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="contraseña" class="block text-gray-700 font-medium mb-2">Contraseña:</label>
+                        <input type="password" name="password" id="editPass" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="rol" class="block text-gray-700 font-medium mb-2">Rol:</label>
+                        <select name="rol" id="editRol" class="border rounded w-full py-3 px-4" required>
+                            <option value="empleado">empleado</option>
+                            <option value="administrador">administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6 text-right">
+                    <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded hover:bg-blue-700" onclick="closeEditModal()">Cancelar</button>
+                    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded hover:bg-blue-700">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+            
     <div id="deleteUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
                 <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Usuario</h2>
@@ -181,5 +225,17 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/js/usuario-Admin.js"></script>
+    
+    <% 
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) { 
+    %>
+    <script>
+        showNotification("<%= message %>", "<%= messageType %>");
+    </script>
+    <%
+        }
+    %>
 </body>
 </html>
