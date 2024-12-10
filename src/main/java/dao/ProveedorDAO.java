@@ -117,4 +117,35 @@ public class ProveedorDAO {
         }
         return lista;
     }
+    
+    public List<Proveedor> MostrarProveedor(String nombreProveedor) {
+        List<Proveedor> lista = new ArrayList<>();
+        Consulta = "CALL sp_Filtrar_Proveedor(?);";
+
+        try {
+            Connection cn = Conexion.getConnection();
+            CallableStatement cst = cn.prepareCall(Consulta);
+
+            cst.setString(1, nombreProveedor);
+            
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(rs.getInt("idProveedor"));
+                proveedor.setNombre(rs.getString("nombre"));
+                proveedor.setRuc(rs.getString("RUC"));
+                proveedor.setEntidad(rs.getString("entidad"));
+                proveedor.setTelefono(rs.getString("telefono"));
+                proveedor.setCorreo(rs.getString("correo"));
+                proveedor.setDireccion(rs.getString("direccion"));
+                lista.add(proveedor);
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+
+        return lista;
+    }
+
 }

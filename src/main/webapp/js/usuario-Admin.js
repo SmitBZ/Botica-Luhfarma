@@ -33,3 +33,27 @@ window.addEventListener('resize', function() {
         body.classList.remove('sidebar-closed');
     }
 });
+
+let currentUsuarioId = null;
+
+function openDeleteModal(userId) {
+    currentUsuarioId = userId; // Guarda el ID de la categoría
+    document.getElementById('deleteUserModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    currentUsuarioId = null; // Limpia el ID de la categoría
+    document.getElementById('deleteUserModal').classList.add('hidden');
+}
+
+function confirmDelete() {
+    if (currentUsuarioId) {
+        // Redirigir al servlet con el ID de la categoría
+        window.location.href = `EliminarUsuario?idUsuario=${currentUsuarioId}`;
+    }
+    closeDeleteModal();
+}
+
+function toggleAddUserModal() {
+    document.getElementById('addUserModal').style.display = 'flex';
+}

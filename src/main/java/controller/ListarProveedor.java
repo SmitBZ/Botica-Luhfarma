@@ -29,8 +29,15 @@ public class ListarProveedor extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nombreProveedor = request.getParameter("txtBuscar");
+    
+        if (nombreProveedor == null) {
+            nombreProveedor = "";
+        }
+        
+        
         ProveedorDAO proveedorDAO = new ProveedorDAO();
-        List<Proveedor> Lista = proveedorDAO.Mostrar();
+        List<Proveedor> Lista = proveedorDAO.MostrarProveedor(nombreProveedor);
         
         request.setAttribute("aLista", Lista);
         request.getRequestDispatcher("Administrador-Proveedor.jsp").forward(request, response);

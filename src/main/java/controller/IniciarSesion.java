@@ -49,7 +49,7 @@ public class IniciarSesion extends HttpServlet {
             switch (us.getRol()) {
                 case "cliente" -> response.sendRedirect("Usuario-Principal.jsp");
                 case "administrador" -> response.sendRedirect("CantidadClientes");
-                case "empleado" -> response.sendRedirect("Empleado-Principal.jsp");
+                case "empleado" -> response.sendRedirect("ListarVentaEmpleado");
                 default -> {
                     request.setAttribute("error", "Correo o contraseña incorrects");
                     request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);

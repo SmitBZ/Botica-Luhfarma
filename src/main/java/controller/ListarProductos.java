@@ -33,6 +33,8 @@ public class ListarProductos extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nombreProducto = request.getParameter("txtNombre");
+
         //Lista de Categorias
         CategoriaDAO alm = new CategoriaDAO();
         List<Categoria> Lista = alm.Mostrar();
@@ -41,13 +43,19 @@ public class ListarProductos extends HttpServlet {
         AlmacenDAO alr = new AlmacenDAO();
         List<Almacen> Almacen = alr.Mostrar();
         
-        //Lista de Productos
-        ProductoDAO prd = new ProductoDAO();
-        List<Producto> Producto = prd.Mostrar();
-        
-        //Lista de Categoria Presentacion
+        // Lista de Categoría Presentación
         PresentacionDAO dao = new PresentacionDAO();
         List<Presentacion> Presentacion = dao.Mostrar();
+        
+        //Lista de Productos
+        ProductoDAO prd = new ProductoDAO();
+        List<Producto> Producto;
+        
+        if (nombreProducto != null && !nombreProducto.trim().isEmpty()) {
+            Producto = prd.MostrarProducto(nombreProducto);
+        } else {
+            Producto = prd.MostrarProducto(null);
+        }
 
         request.setAttribute("aPres", Presentacion);
         request.setAttribute("aLista", Lista);
@@ -82,22 +90,7 @@ public class ListarProductos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                //Lista de Categorias
-        CategoriaDAO alm = new CategoriaDAO();
-        List<Categoria> Lista = alm.Mostrar();
-        
-        //Lista de Almacenes
-        AlmacenDAO alr = new AlmacenDAO();
-        List<Almacen> Almacen = alr.Mostrar();
-        
-        //Lista de Productos
-        ProductoDAO prd = new ProductoDAO();
-        List<Producto> Producto = prd.Mostrar();
-        
-        request.setAttribute("aLista", Lista);
-        request.setAttribute("aLm", Almacen);
-        request.setAttribute("aLm", Producto);
-        request.getRequestDispatcher("Administrador-Producto.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

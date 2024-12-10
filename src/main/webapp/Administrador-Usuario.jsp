@@ -51,12 +51,31 @@
     <br><br><br><br><br>
     <div class="container mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Lista de Usuarios</h1>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-700 transition" onclick="document.getElementById('addUserModal').style.display='flex'"><i class="fas fa-user-plus mr-2"></i>Agregar Usuario</button>
-            </div>
-            <div class="flex space-x-2 justify-end">
-                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200"><i class="fas fa-file-export mr-2"></i>Exportar</button>
+            <div class="flex items-center mb-6">
+                <form action="${pageContext.request.contextPath}/ListarUsuario" method="post" class="flex items-center space-x-2 w-full">
+                    <div class="relative flex items-center space-x-2">
+                        <select name="txtRol" class="p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" style="max-width: 120px;">
+                            <option value="" selected>Seleccionar rol</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="empleado">Empleado</option>
+                        </select>
+                        <div class="relative">
+                            <input type="text" name="txtNombre" placeholder="Buscar por nombre" class="p-2 pl-4 pr-10 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" style="max-width: 250px;"/>
+                            <button type="submit" class="absolute right-0 top-1/2 transform -translate-y-1/2 px-3 py-1 text-gray-500">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="relative flex items-center space-x-2">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md flex items-center transition duration-300" onclick="toggleAddUserModal()">
+                        <i class="fas fa-user-plus mr-2"></i>Agregar Usuario
+                    </button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-md flex items-center transition duration-300" onclick="location.href='${pageContext.request.contextPath}/ExportarUsuario'" >
+                        <i class="fas fa-file-export mr-2"></i>Exportar
+                    </button>
+                </div>
             </div>
             <br>
             <div class="overflow-x-auto">
@@ -88,17 +107,8 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getTelefono() %></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= us.getContraseña()%></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                
-                                <form action="${pageContext.request.contextPath}/RegistrarUsuario" method="post" class="inline-block">
-                                    <input type="hidden" name="action" value="edit">
-                                    <input type="hidden" name="id" value="<%= usuario.getIdUsuario() %>">
-                                    <button type="button" onclick="openEditModal(<%= usuario.getIdUsuario() %>)" class="text-blue-600 hover:text-blue-900"><i class="fas fa-edit"></i></button>
-                                </form>
-                                
-                                <form action="${pageContext.request.contextPath}/EliminarUsuario" method="post" class="inline-block" onsubmit="return confirm('¿Está seguro de eliminar este usuario?');">
-                                    <input type="hidden" name="id" value="<%= usuario.getIdUsuario() %>">
-                                    <button type="submit" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
-                                </form>
+                                <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit mr-1"></i></button>
+                                <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= us.getIdUsuario() %>)"><i class="fas fa-trash-alt mr-1"></i></button>
                             </td>
                         </tr>
                         <%
@@ -117,44 +127,59 @@
         </div>
     </div>
 
-    <div id="addUserModal" class="modal fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center" style="display: none;">
-        <div class="modal-content bg-white rounded-lg p-6">
-            <span class="close" onclick="document.getElementById('addUserModal').style.display='none'">&times;</span>
-            <h2 class="text-xl font-bold mb-4">Agregar Usuario</h2>
+    <div id="addUserModal" class="modal hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+        <div class="modal-content bg-white rounded-lg p-8 w-full max-w-2xl">
+            <span class="close float-right cursor-pointer" onclick="document.getElementById('addUserModal').style.display='none'">&times;</span>
+            <h2 class="text-2xl font-bold mb-6">Agregar Usuario</h2>
             <form action="${pageContext.request.contextPath}/RegistrarUsuario" method="post">
                 <input type="hidden" name="action" value="add">
-                <div class="mb-4">
-                    <label for="nombre" class="block text-gray-700">Nombre:</label>
-                    <input type="text" name="txtNombre" id="txtNombre" class="border rounded w-full py-2 px-3" required>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre:</label>
+                        <input type="text" name="txtNombre" id="txtNombre" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="apellido" class="block text-gray-700 font-medium mb-2">Apellido:</label>
+                        <input type="text" name="txtApellido" id="txtApellido" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email:</label>
+                        <input type="email" name="txtCo" id="txtCo" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-gray-700 font-medium mb-2">Teléfono:</label>
+                        <input type="text" name="txtTelefono" id="txtTelefono" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="contraseña" class="block text-gray-700 font-medium mb-2">Contraseña:</label>
+                        <input type="password" name="txtPass" id="txtPass" class="border rounded w-full py-3 px-4" required>
+                    </div>
+                    <div>
+                        <label for="rol" class="block text-gray-700 font-medium mb-2">Rol:</label>
+                        <select name="txtRol" id="txtRol" class="border rounded w-full py-3 px-4" required>
+                            <option value="empleado">empleado</option>
+                            <option value="administrador">administrador</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label for="apellido" class="block text-gray-700">Apellido:</label>
-                    <input type="text" name="txtApellido" id="txtApellido" class="border rounded w-full py-2 px-3" required>
+                <div class="mt-6 text-right">
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">Agregar Usuario</button>
                 </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email:</label>
-                    <input type="email" name="txtCo" id="txtCo" class="border rounded w-full py-2 px-3" required>
-                </div>
-                <div class="mb-4">
-                    <label for="telefono" class="block text-gray-700">Teléfono:</label>
-                    <input type="text" name="txtTelefono" id="txtTelefono" class="border rounded w-full py-2 px-3" required>
-                </div>
-                <div class="mb-4">
-                    <label for="contraseña" class="block text-gray-700">Contraseña:</label>
-                    <input type="password" name="txtPass" id="txtPass" class="border rounded w-full py-2 px-3" required>
-                </div>
-                <div class="mb-4">
-                    <label for="rol" class="block text-gray-700">Rol:</label>
-                    <select name="txtRol" id="txtRol" class="border rounded w-full py-2 px-3" required>
-                        <option value="empleado">empleado</option>
-                        <option value="administrador">administrador</option>
-                    </select>
-                </div>
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Agregar Usuario</button>
             </form>
         </div>
     </div>
-                
+    
+    <div id="deleteUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Usuario</h2>
+                <p class="mb-4">¿Está seguro de que desea eliminar el usuario seleccionado?</p>
+                <div class="flex justify-end space-x-2">
+                    <button onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button onclick="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                </div>
+            </div>
+    </div>
+
     <script src="${pageContext.request.contextPath}/js/usuario-Admin.js"></script>
 </body>
 </html>

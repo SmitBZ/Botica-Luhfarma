@@ -1,174 +1,9 @@
-// ================================
-// Base de datos de productos
-// ================================
-const productosDB = {
-    producto1: { 
-        nombre: "Paracetamol",
-        unidad: 1.50, 
-        blister: 8.00, 
-        caja: 15.00 
-    },
-    producto2: { 
-        nombre: "Ibuprofeno",
-        unidad: 2.00, 
-        blister: 10.00, 
-        caja: 20.00 
-    },
-    producto3: { 
-        nombre: "Amoxicilina",
-        unidad: 1.20, 
-        blister: 6.00, 
-        caja: 12.00 
-    }
-};
-
-// ================================
-// Elementos del DOM
-// ================================
-const elements = {
-    codigoVenta: document.getElementById('codigo-venta'),
-    articulo: document.getElementById('articulo'),
-    unidad: document.getElementById('unidad'),
-    cantidad: document.getElementById('cantidad'),
-    precio: document.getElementById('precio'),
-    agregar: document.getElementById('agregar'),
-    productosLista: document.getElementById('productos-lista'),
-    total: document.getElementById('total'),
-    nuevaVenta: document.getElementById('nueva-venta'),
-    confirmarVenta: document.getElementById('confirmar-venta')
-};
-
-// ================================
-// Variables globales
-// ================================
-let total = 0;
-let productos = [];
-
-// ================================
-// Funciones principales
-// ================================
-
 /**
- * Genera un código de venta único basado en la fecha y un número aleatorio.
+ * Funcion del sidebar
+ * -Cambia el estado de visibilidad de la barra lateral (sidebar).
+ * -Añade o quita las clases CSS closed y sidebar-closed en el sidebar y el body respectivamente.
+ * -Esto permite ocultar o mostrar la barra lateral y ajustar el diseño de la página en consecuencia.
  */
-function generarCodigoVenta() {
-    const fecha = new Date().toISOString().slice(2, 10).replace(/-/g, '');
-    const aleatorio = Math.floor(1000 + Math.random() * 9000);
-    elements.codigoVenta.value = `V${fecha}-${aleatorio}`;
-}
-
-/**
- * Actualiza el precio basado en el artículo y unidad seleccionados.
- */
-function actualizarPrecio() {
-    const articulo = elements.articulo.value;
-    const unidad = elements.unidad.value;
-    if (articulo && unidad) {
-        const precio = productosDB[articulo][unidad];
-        elements.precio.value = precio ? precio.toFixed(2) : '';
-    }
-}
-
-/**
- * Actualiza el total de la venta sumando todos los subtotales de los productos.
- */
-function actualizarTotal() {
-    total = productos.reduce((sum, item) => sum + item.subtotal, 0);
-    elements.total.textContent = `S/ ${total.toFixed(2)}`;
-}
-
-/**
- * Elimina un producto de la lista.
- * @param {number} index - Índice del producto a eliminar.
- */
-function eliminarProducto(index) {
-    productos.splice(index, 1);
-    renderizarProductos();
-    actualizarTotal();
-}
-
-/**
- * Renderiza la lista de productos en el DOM.
- */
-function renderizarProductos() {
-    elements.productosLista.innerHTML = productos.map((item, index) => `
-        <div class="producto-item">
-            <span>${item.cantidad}</span>
-            <span>${productosDB[item.articulo].nombre} (${item.unidad})</span>
-            <span>S/ ${item.subtotal.toFixed(2)}</span>
-            <button onclick="eliminarProducto(${index})">×</button>
-        </div>
-    `).join('');
-}
-
-/**
- * Limpia el formulario de entrada.
- */
-function limpiarFormulario() {
-    elements.articulo.value = '';
-    elements.unidad.value = 'unidad';
-    elements.cantidad.value = '1';
-    elements.precio.value = '';
-}
-
-// ================================
-// Event Listeners
-// ================================
-elements.articulo.addEventListener('change', actualizarPrecio);
-elements.unidad.addEventListener('change', actualizarPrecio);
-
-elements.agregar.addEventListener('click', () => {
-    const cantidad = parseInt(elements.cantidad.value);
-    const precioUnitario = parseFloat(elements.precio.value);
-    const articulo = elements.articulo.value;
-    const unidad = elements.unidad.value;
-
-    if (articulo && cantidad > 0 && precioUnitario > 0) {
-        productos.push({
-            articulo,
-            unidad,
-            cantidad,
-            subtotal: cantidad * precioUnitario
-        });
-
-        renderizarProductos();
-        actualizarTotal();
-        limpiarFormulario();
-    } else {
-        alert('Por favor, complete todos los campos correctamente.');
-    }
-});
-
-elements.nuevaVenta.addEventListener('click', () => {
-    generarCodigoVenta();
-    productos = [];
-    total = 0;
-    renderizarProductos();
-    actualizarTotal();
-    limpiarFormulario();
-});
-
-elements.confirmarVenta.addEventListener('click', () => {
-    if (productos.length === 0) {
-        alert('Agregue al menos un producto para confirmar la venta.');
-        return;
-    }
-    
-    alert(`Venta ${elements.codigoVenta.value} confirmada por un total de S/ ${total.toFixed(2)}`);
-    elements.nuevaVenta.click();
-});
-
-// ================================
-// Inicialización
-// ================================
-window.onload = () => {
-    generarCodigoVenta();
-    actualizarPrecio();
-};
-
-// ================================
-// Funciones de Sidebar
-// ================================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -177,7 +12,13 @@ function toggleSidebar() {
     body.classList.toggle('sidebar-closed');
 }
 
-// Cerrar sidebar en móviles al hacer clic fuera
+/**
+ * Funcion del sidebar para pantallas pequeñas
+ * -Detecta clics en cualquier parte del documento.
+ * -Si el clic no ocurre dentro del sidebar ni en el botón del menú (menu-btn) y la ventana es menor o igual a 1024 píxeles, 
+ *  se cierra el sidebar.
+ * -Evita que el sidebar permanezca abierto accidentalmente en pantallas pequeñas.
+ */
 document.addEventListener('click', function(event) {
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.querySelector('.menu-btn');
@@ -190,7 +31,12 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Ajustar sidebar al redimensionar ventana
+/**
+ * Funcion para ajustar el diseño según el tamaño de la ventana
+ * -Detecta cambios en el tamaño de la ventana.
+ * -Si la ventana es pequeña (<= 1024px), cierra automáticamente el sidebar.
+ * -En pantallas grandes, asegura que el sidebar esté visible.
+ */
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -203,3 +49,88 @@ window.addEventListener('resize', function() {
         body.classList.remove('sidebar-closed');
     }
 });
+
+/**
+ * Gestión del Carrito de Compras
+ * -Espera a que la página esté completamente cargada antes de interactuar con los elementos.
+ * -Define el carrito como un array para almacenar los productos seleccionados.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    const productosLista = document.getElementById("productos-lista");
+    const totalSpan = document.getElementById("total");
+    const agregarBtn = document.getElementById("agregar");
+
+    let carrito = [];
+    //Agregar Producto al Carrito
+    agregarBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const productoId = document.getElementById("txtProducto").value;
+        const productoNombre = document.getElementById("txtProducto").selectedOptions[0].text;
+        const presentacionId = document.getElementById("txtPresentacion").value;
+        const presentacionNombre = document.getElementById("txtPresentacion").selectedOptions[0].text;
+        const cantidad = parseInt(document.getElementById("txtCantidad").value);
+        const precioUnitario = parseFloat(document.getElementById("txtPrecio").value);
+
+        if (!productoId || !presentacionId || cantidad <= 0 || isNaN(precioUnitario)) {
+            alert("Por favor, completa todos los campos correctamente.");
+            return;
+        }
+
+        const subtotal = cantidad * precioUnitario;
+
+        carrito.push({
+            productoId,
+            productoNombre,
+            presentacionId,
+            presentacionNombre,
+            cantidad,
+            precioUnitario,
+            subtotal,
+        });
+
+        renderCarrito();
+    });
+    
+    //Actualizar la Vista del Carrito
+    function renderCarrito() {
+        productosLista.innerHTML = "";
+
+        let total = 0;
+        carrito.forEach((item, index) => {
+            total += item.subtotal;
+
+            const div = document.createElement("div");
+            div.className = "producto-item flex justify-between p-2 border-b";
+            div.innerHTML = `
+                <div>
+                    <span class="font-bold">${item.productoNombre}</span>
+                    <span class="text-sm">(${item.presentacionNombre})</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4">Cantidad: ${item.cantidad}</span>
+                    <span class="mr-4">Precio: S/ ${item.precioUnitario.toFixed(2)}</span>
+                    <span class="font-bold">Subtotal: S/ ${item.subtotal.toFixed(2)}</span>
+                    <button onclick="eliminarProducto(${index})" class="text-red-600 hover:text-red-800 font-bold text-lg bg-transparent border-2 border-red-600 rounded-full p-1 ml-4 transition-colors duration-200">
+                    Eliminar
+                    </button>
+                </div>
+            `;
+            productosLista.appendChild(div);
+        });
+
+        totalSpan.textContent = `S/ ${total.toFixed(2)}`;
+    }
+    
+    //Confirmar Venta
+    document.getElementById('confirmar-venta').addEventListener('click', function() {
+        document.getElementById('formVenta').submit(); // Envía el formulario
+    });
+    
+    //Eliminar Producto del Carrito
+    window.eliminarProducto = (index) => {
+        carrito.splice(index, 1);
+        renderCarrito();
+    };
+});
+

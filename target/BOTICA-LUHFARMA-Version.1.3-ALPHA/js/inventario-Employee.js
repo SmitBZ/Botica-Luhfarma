@@ -37,9 +37,9 @@ function adjustSidebarOnResize() {
 }
 
 function toggleDetails(button) {
-            const details = button.nextElementSibling;
-            const icon = button.querySelector('i');
+    const details = button.nextElementSibling;
+    const icon = button.querySelector('i');
             
-            button.classList.toggle('active');
-            details.classList.toggle('show');
-        }
+    button.classList.toggle('active');
+    details.classList.toggle('show');
+}

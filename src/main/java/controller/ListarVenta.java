@@ -29,6 +29,9 @@ public class ListarVenta extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String codigoVenta = "VEN-" + System.currentTimeMillis();
+        request.setAttribute("codigoVenta", codigoVenta);
+
         //Lista de Productos
         ProductoDAO prd = new ProductoDAO();
         List<Producto> Producto = prd.Mostrar();
