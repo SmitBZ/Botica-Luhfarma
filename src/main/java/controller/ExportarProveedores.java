@@ -2,14 +2,13 @@ package controller;
 
 import dao.ProveedorDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 import java.util.List;
-import model.Producto;
 import model.Proveedor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -40,38 +39,40 @@ public class ExportarProveedores extends HttpServlet {
             response.getWriter().write("No hay provedor para exportar.");
             return;
         }
-        Workbook wb = new XSSFWorkbook();
-        Sheet sheet = wb.createSheet("Proveedores");
+        
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Proveedores");
         
         Row headerRow = sheet.createRow(0);
         headerRow.createCell(0).setCellValue("ID");
         headerRow.createCell(1).setCellValue("Nombre");
-        headerRow.createCell(2).setCellValue("Precio");
-        headerRow.createCell(3).setCellValue("Descripción");
-        headerRow.createCell(4).setCellValue("Fecha de Producción");
-        headerRow.createCell(5).setCellValue("Fecha de Caducidad");
-        headerRow.createCell(6).setCellValue("Categoría");
-        headerRow.createCell(7).setCellValue("Almacén");
-        headerRow.createCell(8).setCellValue("Presentación");
+        headerRow.createCell(2).setCellValue("RUC");
+        headerRow.createCell(3).setCellValue("CORREO");
+        headerRow.createCell(4).setCellValue("TELEFONO");
+        headerRow.createCell(5).setCellValue("DIRECCIÓN");
+        headerRow.createCell(6).setCellValue("ENTIDAD");
         
-        // Llenar los datos
-        for (int i = 0; i < provedor.size(); i++) {
-            Row row = sheet.createRow(i + 1);
-            Proveedor proveedor = provedor.get(i);
-            row.createCell(0).setCellValue(proveedor.getIdProveedor());
-            row.createCell(1).setCellValue(proveedor.getNombre());
-            row.createCell(2).setCellValue(proveedor.getRuc());
-            row.createCell(3).setCellValue(proveedor.getCorreo());
-            row.createCell(4).setCellValue(proveedor.getTelefono());
-            row.createCell(5).setCellValue(proveedor.getDireccion());
-            row.createCell(6).setCellValue(proveedor.getEntidad());
+        int rowNum = 1;
+        
+        for (Proveedor pr : provedor) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(pr.getIdProveedor());
+            row.createCell(1).setCellValue(pr.getNombre());
+            row.createCell(2).setCellValue(pr.getRuc());
+            row.createCell(3).setCellValue(pr.getCorreo());
+            row.createCell(4).setCellValue(pr.getTelefono());
+            row.createCell(5).setCellValue(pr.getDireccion());
+            row.createCell(6).setCellValue(pr.getEntidad());
         }
         
         // Enviar el archivo al cliente
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment;filename=proveedores.xlsx");
-        wb.write(response.getOutputStream());
-        wb.close();
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"proveedor.xlsx\"");
+        
+        try (OutputStream os = response.getOutputStream()) {
+            workbook.write(os);
+            workbook.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

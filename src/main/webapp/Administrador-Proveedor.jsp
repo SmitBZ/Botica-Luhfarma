@@ -62,6 +62,9 @@
                         </button>
                     </div>
                 </form>
+                <form method="post" action="ExportarProveedores">
+                    <button class="btn btn-success"><i class="fas fa-file-excel mr-2"></i>Exportar a Excel</button>
+                </form>
                 <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"><i class="fas fa-plus mr-2"></i>Nuevo Proveedor</button>
             </div>
         
