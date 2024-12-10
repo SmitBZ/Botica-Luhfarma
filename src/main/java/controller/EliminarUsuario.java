@@ -31,7 +31,7 @@ public class EliminarUsuario extends HttpServlet {
         try {
             idUsuario = Integer.parseInt(idUsuarioParam);
         } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de almacén no válido");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de usuario no válido");
             return;
         }
 
@@ -39,9 +39,13 @@ public class EliminarUsuario extends HttpServlet {
         boolean eliminado = userdao.Eliminar(idUsuario);
 
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarUsuario?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente el usuario.");
+            request.setAttribute("messageType", "success");
+            request.getRequestDispatcher("ListarUsuario").forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarUsuario?error=NoSePudoEliminar");
+            request.setAttribute("message", "No se pudo eliminar el usuario. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarUsuario").forward(request, response);
         }
     }
 

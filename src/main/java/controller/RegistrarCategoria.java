@@ -44,12 +44,12 @@ public class RegistrarCategoria extends HttpServlet {
         boolean yaRegistrado = ctd.Registrar(ct);
     
         if (yaRegistrado) {
-        // Redirigir con mensaje de éxito
-            request.setAttribute("mensaje", "El almacén fue registrado exitosamente.");
+            request.setAttribute("message", "Se agrego correctamente la categoria.");
+            request.setAttribute("messageType", "success");
             request.getRequestDispatcher("ListarCategoria").forward(request, response);
         } else {
-        // Error al registrar el almacén
-            request.setAttribute("mensaje", "Hubo un error al registrar el almacén.");
+            request.setAttribute("mensaje", "Hubo un error al registrar la categoria.");
+            request.setAttribute("messageType", "error");
             request.getRequestDispatcher("ListarCategoria").forward(request, response);
         }
     }

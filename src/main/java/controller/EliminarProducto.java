@@ -39,9 +39,13 @@ public class EliminarProducto extends HttpServlet {
         boolean eliminado = prv.eliminar(idProducto);
 
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarProductos?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente el producto");
+            request.setAttribute("messageType", "success");
+            request.getRequestDispatcher("ListarProductos").forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarProductos?error=NoSePudoEliminar");
+            request.setAttribute("message", "No se pudo eliminar el producto. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarProductos").forward(request, response);
         }
     }
 

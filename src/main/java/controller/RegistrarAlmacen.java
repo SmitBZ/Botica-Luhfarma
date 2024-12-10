@@ -27,34 +27,33 @@ public class RegistrarAlmacen extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String Nombre = request.getParameter("txtNombre");
-    String Descripcion = request.getParameter("txtDescripcion");
-    String Capacidad = request.getParameter("txtCapacidad");
+        String Descripcion = request.getParameter("txtDescripcion");
+        String Capacidad = request.getParameter("txtCapacidad");
 
-    if (Nombre.isEmpty() || Descripcion.isEmpty() || Capacidad.isEmpty()) {
-        // Redirigir con mensaje de error
-        request.setAttribute("mensaje", "Todos los campos son requeridos.");
-        request.getRequestDispatcher("Administrador-Almacenes.jsp").forward(request, response);
-        return;
-    }
+        if (Nombre.isEmpty() || Descripcion.isEmpty() || Capacidad.isEmpty()) {
+            request.setAttribute("mensaje", "Todos los campos son requeridos.");
+            request.getRequestDispatcher("Administrador-Almacenes.jsp").forward(request, response);
+            return;
+        }
 
-    AlmacenDAO amd = new AlmacenDAO();
-    Almacen am = new Almacen();
+        AlmacenDAO amd = new AlmacenDAO();
+        Almacen am = new Almacen();
     
-    am.setNombre(Nombre);
-    am.setDescripcion(Descripcion);
-    am.setCapacidad(Capacidad);
+        am.setNombre(Nombre);
+        am.setDescripcion(Descripcion);
+        am.setCapacidad(Capacidad);
     
-    boolean yaRegistrado = amd.Registrar(am);
+        boolean yaRegistrado = amd.Registrar(am);
     
-    if (yaRegistrado) {
-        // Redirigir con mensaje de éxito
-        request.setAttribute("mensaje", "El almacén fue registrado exitosamente.");
-        request.getRequestDispatcher("ListarAlmacen").forward(request, response);
-    } else {
-        // Error al registrar el almacén
-        request.setAttribute("mensaje", "Hubo un error al registrar el almacén.");
-        request.getRequestDispatcher("ListarAlmacen").forward(request, response);
-    }
+        if (yaRegistrado) {
+            request.setAttribute("message", "Se agrego correctamente el almacén");
+            request.setAttribute("messageType", "success"); // Indica que es un mensaje de éxito
+            request.getRequestDispatcher("ListarAlmacen").forward(request, response);
+        } else {
+            request.setAttribute("message", "No se pudo agregar el almacén. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarAlmacen").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -66,7 +66,7 @@
                     <h3 class="font-semibold mb-2"><%= ct.getNombre() %></h3>
                     <p class="text-gray-600 text-sm mb-4"><%= ct.getDescripcion() %></p>
                     <div class="flex justify-end space-x-2">
-                        <button onclick="openEditModal(2)" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                        <button class="text-blue-500 hover:text-blue-700" onclick="openEditModal('<%= ct.getIdCategoria() %>','<%= ct.getNombre() %>','<%= ct.getDescripcion() %>')"><i class="fas fa-edit"></i></button>
                         <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= ct.getIdCategoria() %>)"><i class="fas fa-trash-alt mr-1"></i>Eliminar</button>
                     </div>
                 </div>
@@ -93,25 +93,31 @@
                 </form>
             </div>
         </div>
+                    
         <div id="editCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
-                <h2 class="text-xl font-bold mb-4">Editar Categoría</h2>
-                <form id="editCategoryForm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold mb-4">Editar Categoría</h2>
+                    <button onclick="closeEditModal()" class="text-gray-600 hover:text-gray-900"><i class="fas fa-times"></i></button>
+                </div>
+                <form id="editCategoryForm" class="space-y-4" method="post" action="${pageContext.request.contextPath}/EditarCategoria">
+                    <input type="hidden" id="editIdCategoria" name="idCategoria">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
-                        <input type="text" id="editCategoryName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                        <input type="text" id="editCategoryName" name="nombre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
-                        <textarea id="editCategoryDescription" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" rows="3"></textarea>
+                        <textarea id="editCategoryDescription" name="descripcion" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" rows="3"></textarea>
                     </div>
                     <div class="flex justify-end space-x-2">
                         <button type="button" onclick="closeEditModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Actualizar</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
+                    
         <div id="deleteCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
                 <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Categoría</h2>
@@ -124,5 +130,17 @@
         </div>
         
         <script src="${pageContext.request.contextPath}/js/categoria-Admin.js"></script>
+        
+        <% 
+            String message = (String) request.getAttribute("message");
+            String messageType = (String) request.getAttribute("messageType");
+            if (message != null && messageType != null) { 
+        %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+        <%
+            } 
+        %>
     </body>
 </html>

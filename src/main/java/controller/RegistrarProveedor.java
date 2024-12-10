@@ -34,7 +34,7 @@ public class RegistrarProveedor extends HttpServlet {
         String Entidad = request.getParameter("txtEntidad");
         
         if(Nombre.isEmpty() || Direccion.isEmpty() || Email.isEmpty() || Telefono.isEmpty() || RUC.isEmpty() || Entidad.isEmpty()){
-            request.getRequestDispatcher("proveedor.jsp").forward(request, response);
+            request.getRequestDispatcher("ListarProveedor").forward(request, response);
             return;
         }
         
@@ -49,11 +49,13 @@ public class RegistrarProveedor extends HttpServlet {
         
         boolean registrado = prd.Registrar(pr);
         
-        if(registrado){
-            request.setAttribute("mensaje", "El proveedor fue registrado exitosamente");
+        if(!registrado){
+            request.setAttribute("message", "Se agrego correctamente el proveedor");
+            request.setAttribute("messageType", "success"); // Indica que es un mensaje de éxito
             request.getRequestDispatcher("ListarProveedor").forward(request, response);
         }else{
-            request.setAttribute("mensaje", "El proveedor ya está registradoo o hubo un error.");
+            request.setAttribute("message", "No se pudo agregar el proveedor. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
             request.getRequestDispatcher("ListarProveedor").forward(request, response);
         }
     }

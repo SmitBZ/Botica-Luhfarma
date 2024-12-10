@@ -61,22 +61,22 @@
             <a href="${pageContext.request.contextPath}/index.jsp" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
         </header>
         <%-- Add this after the </header> tag and before the closing </body> tag --%>
-    <div class="container mx-auto px-4 py-8">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Presentaciones</h1>
-        <button onclick="openAddPresentacionModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-            <i class="fas fa-plus mr-2"></i> Agregar Presentación
-        </button>
-    </div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% List<Presentacion> pres = (List<Presentacion>) request.getAttribute("aPres");if (pres != null && !pres.isEmpty()) {for (Presentacion pr : pres) { %>
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Presentaciones</h1>
+                <button onclick="openAddPresentacionModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Agregar Presentación
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% List<Presentacion> pres = (List<Presentacion>) request.getAttribute("aPres");if (pres != null && !pres.isEmpty()) {for (Presentacion pr : pres) { %>
             <div class="bg-white shadow-md rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800"><%= pr.getNombre() %></h3>
                     <p class="text-gray-600"><%= pr.getDescripcion() %></p>
                     <div class="flex space-x-2">
-                        <button class="text-blue-500 hover:text-blue-600" onclick="openEditPresentacionModal()">
+                        <button class="text-blue-500 hover:text-blue-600" onclick="openEditPresentacionModal('<%= pr.getIdPresentacion()%>','<%= pr.getNombre() %>','<%= pr.getDescripcion()%>')">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="text-red-500 hover:text-red-600" onclick="openDeleteModal(<%= pr.getIdPresentacion() %>)">
@@ -85,12 +85,12 @@
                     </div>
                 </div>
             </div>
-        <% } } else { %>
-        <div class="col-span-full text-center py-8">
-            <p class="text-gray-500">No hay presentaciones registradas</p>
+            <% } } else { %>
+            <div class="col-span-full text-center py-8">
+                <p class="text-gray-500">No hay presentaciones registradas</p>
+            </div>
+            <% } %>
         </div>
-        <% } %>
-</div>
 
      
 
@@ -136,16 +136,15 @@
                 </button>
             </div>
             <form action="${pageContext.request.contextPath}/EditarPresentacion" method="post">
-                <input type="hidden" id="editPresentacionId" name="presentacionId">
+                <input type="hidden" id="editPresentacionId" name="idPresentacion">
                 <div class="mb-4">
                     <label for="editNombrePresentacion" class="block text-gray-700 font-bold mb-2">Nombre</label>
-                    <input type="text" id="editNombrePresentacion" name="nombrePresentacion" required 
+                    <input type="text" id="editNombrePresentacion" name="nombre" required 
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="mb-4">
                     <label for="editDescripcionPresentacion" class="block text-gray-700 font-bold mb-2">Descripción (Opcional)</label>
-                    <textarea id="editDescripcionPresentacion" name="descripcionPresentacion" 
-                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <textarea id="editDescripcionPresentacion" name="descripcion" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
                 <div class="flex justify-end space-x-3">
                     <button type="button" onclick="closeEditPresentacionModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
@@ -173,8 +172,18 @@
 
     <%-- JavaScript para Modales --%>
     <script src="${pageContext.request.contextPath}/js/presentacion-Admin.js"></script>
-</div>
+    <% 
+            String message = (String) request.getAttribute("message");
+            String messageType = (String) request.getAttribute("messageType");
+            if (message != null && messageType != null) { 
+        %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+        <%
+            } 
+        %>
 
-    </body>
+</body>
 </html>
 

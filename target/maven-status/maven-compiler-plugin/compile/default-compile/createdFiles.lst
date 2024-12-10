@@ -1,3 +1,4 @@
+controller\EditarProducto.class
 model\CompraProveedor.class
 com\botica\luhfarma\JakartaRestConfiguration.class
 model\Reporte.class
@@ -6,6 +7,7 @@ model\Venta.class
 model\Compra.class
 controller\ListarCategoria.class
 controller\ListarPresentaciones.class
+controller\EditarUsuario.class
 util\Conexion.class
 dao\AlmacenDAO.class
 controller\IniciarSesion.class
@@ -17,6 +19,7 @@ controller\ListarReporteEmpleado.class
 dao\VentaDAO.class
 controller\EliminarAlmacen.class
 model\Producto.class
+controller\EditarCategoria.class
 controller\ListarVentaEmpleado.class
 controller\RegistrarVentaEmpleado.class
 controller\CantidadClientes.class
@@ -28,6 +31,8 @@ controller\ListarProveedor.class
 controller\RegistrarAlmacen.class
 controller\RegistrarCliente.class
 dao\ProveedorDAO.class
+controller\EditarPresentacion.class
+controller\EditarProveedor.class
 controller\RegistrarCategoria.class
 model\Usuario.class
 model\Categoria.class
@@ -46,7 +51,7 @@ controller\RegistrarVenta.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class
-controller\ExportarUsuario.class
+controller\EditarAlmacen.class
 controller\EliminarUsuario.class
 com\botica\luhfarma\resources\JakartaEE11Resource.class
 controller\ListarReporte.class
