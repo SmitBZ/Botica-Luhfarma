@@ -30,10 +30,14 @@ public class ListarPresentaciones extends HttpServlet {
         PresentacionDAO dao = new PresentacionDAO();
         List<Presentacion> listaPre = dao.Mostrar();
 
-        // Pasar la lista de presentaciones a la vista
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
+        
         request.setAttribute("aPres", listaPre);
-
-        // Redirigir a la página JSP donde se mostrará la lista
         request.getRequestDispatcher("Administrador-Presentacion.jsp").forward(request, response);
     }
 

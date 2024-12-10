@@ -56,6 +56,13 @@ public class ListarProductos extends HttpServlet {
         } else {
             Producto = prd.MostrarProducto(null);
         }
+        
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
 
         request.setAttribute("aPres", Presentacion);
         request.setAttribute("aLista", Lista);

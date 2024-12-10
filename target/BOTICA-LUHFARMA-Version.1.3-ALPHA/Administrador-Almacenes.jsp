@@ -72,7 +72,7 @@
                         <p class="text-gray-600"><i class="fas fa-cube mr-2"></i>Descripcion: <%= almacen.getDescripcion() %></p>
                     </div>
                     <div class="mt-4 flex justify-between">
-                        <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit mr-1"></i>Editar</button>
+                        <button class="text-blue-500 hover:text-blue-700" onclick="openEditWarehouseModal('<%= almacen.getIdAlmacen() %>', '<%= almacen.getNombre() %>', '<%= almacen.getCapacidad() %>', '<%= almacen.getDescripcion() %>')"><i class="fas fa-edit mr-1"></i>Editar</button>
                         <button class="text-red-500 hover:text-red-700" onclick="openDeleteModal(<%= almacen.getIdAlmacen() %>)"><i class="fas fa-trash-alt mr-1"></i>Eliminar</button>
                     </div>
                 </div>
@@ -107,6 +107,36 @@
                 </form>
             </div>
         </div>
+                 
+        <!-- Modal para editar -->
+        <div id="editWarehouseModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-96">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Editar Almacén</h2>
+                    <button onclick="closeEditWarehouseModal()" class="text-gray-600 hover:text-gray-900"><i class="fas fa-times"></i></button>
+                </div>
+                <form id="editWarehouseForm" class="space-y-4" method="post" action="${pageContext.request.contextPath}/EditarAlmacen">
+                    <input type="hidden" id="editIdAlmacen" name="idAlmacen">
+                    <div>
+                        <label for="editWarehouseName" class="block text-sm font-medium text-gray-700">Nombre del Almacén</label>
+                        <input type="text" id="editNombre" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200">
+                    </div>
+                    <div>
+                        <label for="editWarehouseCapacity" class="block text-sm font-medium text-gray-700">Capacidad (m²)</label>
+                        <input type="text" id="editCapacidad" name="capacidad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200" pattern="^[0-9]+$" title="La capacidad debe ser un número positivo">
+                    </div>
+                    <div>
+                        <label for="editDescripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                        <textarea id="editDescripcion" name="descripcion" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-4">
+                        <button type="button" onclick="closeEditWarehouseModal()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">Cancelar</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
          
         <div id="deleteCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
@@ -119,5 +149,17 @@
             </div>
         </div>
         <script src="${pageContext.request.contextPath}/js/almacen-Admin.js"></script>
+        
+        <% 
+            String message = (String) request.getAttribute("message");
+            String messageType = (String) request.getAttribute("messageType");
+            if (message != null && messageType != null) { 
+        %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+        <%
+            } 
+        %>
     </body>
 </html>

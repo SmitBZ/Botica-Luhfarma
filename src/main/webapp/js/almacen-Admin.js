@@ -1,4 +1,4 @@
-// Función para abrir/cerrar sidebar
+
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -7,7 +7,7 @@ function toggleSidebar() {
     body.classList.toggle('sidebar-closed');
 }
 
-// Cerrar sidebar en dispositivos móviles al hacer clic fuera
+
 document.addEventListener('click', function(event) {
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.querySelector('.menu-btn');
@@ -20,7 +20,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Ajustar sidebar al redimensionar la ventana
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
@@ -33,6 +32,7 @@ window.addEventListener('resize', function() {
         body.classList.remove('sidebar-closed');
     }
 });
+
 function openAddWarehouseModal() {
     document.getElementById('addWarehouseModal').classList.remove('hidden');
 }
@@ -42,69 +42,91 @@ function closeAddWarehouseModal() {
 }
 
 
+function openEditWarehouseModal(idAlmacen, nombre, capacidad, descripcion) {
+    document.getElementById('editIdAlmacen').value = idAlmacen;
+    document.getElementById('editNombre').value = nombre;
+    document.getElementById('editCapacidad').value = capacidad;
+    document.getElementById('editDescripcion').value = descripcion;
+    document.getElementById('editWarehouseModal').classList.remove('hidden');
+}
+
+function closeEditWarehouseModal() {
+    document.getElementById('editWarehouseModal').classList.add('hidden');
+}
+
 let currentCategoryId = null;
 
 function openDeleteModal(categoryId) {
-    currentCategoryId = categoryId; // Guarda el ID de la categoría
+    currentCategoryId = categoryId;
     document.getElementById('deleteCategoryModal').classList.remove('hidden');
 }
 
 function closeDeleteModal() {
-    currentCategoryId = null; // Limpia el ID de la categoría
+    currentCategoryId = null;
     document.getElementById('deleteCategoryModal').classList.add('hidden');
 }
 
 function confirmDelete() {
     if (currentCategoryId) {
-        // Redirigir al servlet con el ID de la categoría
         window.location.href = `EliminarAlmacen?idAlmacen=${currentCategoryId}`;
     }
     closeDeleteModal();
 }
 
-
 function validarCapacidad(event) {
-    // Obtener el valor actual del campo
     let cap = event.target.value;
-    
-    // Remover cualquier carácter que no sea número
     let numeroLimpio = cap.replace(/\D/g, '');
     
-    // Limitar a 8 dígitos (longitud del DNI en Perú)
     if (numeroLimpio.length > 5) {
         numeroLimpio = numeroLimpio.slice(0, 5);
     }
-    
-    // Actualizar el valor del campo
     event.target.value = numeroLimpio;
 }
 
-// Función para validar el formulario antes de enviarlo
 function validarFormulario(event) {
     const capa = document.getElementById('txtCapacidad').value;
     
-
     if (capa.length !== 5) {
         alert('La capacidad debe ser un número positivo');
         event.preventDefault();
         return false;
     }
-    
     return true;
 }
 
-// Agregar los event listeners cuando el documento esté cargado
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener referencias a los campos
     const capInput = document.getElementById('txtCapacidad');
     const formulario = document.querySelector('.signup-form');
     
     if (capInput) {
         capInput.addEventListener('input', validarCapacidad);
     }
-    
-    // Agregar validación al enviar el formulario
     if (formulario) {
         formulario.addEventListener('submit', validarFormulario);
     }
 });
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.innerText = message;
+    notification.style.position = 'fixed';
+    notification.style.top = '70px';
+    notification.style.right = '20px';
+    notification.style.color = '#fff';
+    notification.style.padding = '10px 20px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+    notification.style.zIndex = '1000';
+
+    if (type === 'success') {
+        notification.style.backgroundColor = '#4CAF50';
+    } else if (type === 'error') {
+        notification.style.backgroundColor = '#f44336';
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}

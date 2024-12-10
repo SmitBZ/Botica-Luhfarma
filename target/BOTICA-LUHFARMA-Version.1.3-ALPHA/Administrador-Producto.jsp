@@ -103,7 +103,7 @@
                             <td><%=pr.getAlmacen()%></td>
                             <td><%=pr.getPresentacion()%></td>
                             <td class="flex space-x-2">
-                                <button class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                                <button class="text-blue-600 hover:text-blue-800" onclick=""><i class="fas fa-edit"></i></button>
                                 <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= pr.getIdProducto() %>)"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -136,8 +136,7 @@
                             <option value="<%= ct.getIdCategoria() %>"><%= ct.getNombre() %></option>
                             <% }} else { %><option disabled>No hay categorías registradas disponibles</option><% } %>
                         </select>
-                    </div>
-                    
+                    </div> 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Precio</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
@@ -170,13 +169,13 @@
                     </select>
                 </div>
                 <div>
-                <label class="block text-sm font-medium text-gray-700">Almacén</label>
-                <select name="txtAlmacen" id="txtAlmacen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">Seleccionar almacén</option>
-                    <% List<Almacen> almacen = (List<Almacen>) request.getAttribute("aLm"); if (almacen != null && !almacen.isEmpty()) {for (Almacen al : almacen) {%>
-                    <option value="<%= al.getIdAlmacen() %>"><%= al.getNombre() %></option>
-                    <% }} else { %><option disabled>No hay almacenes registradas disponibles</option><% } %>
-                </select>
+                    <label class="block text-sm font-medium text-gray-700">Almacén</label>
+                    <select name="txtAlmacen" id="txtAlmacen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Seleccionar almacén</option>
+                        <% List<Almacen> almacen = (List<Almacen>) request.getAttribute("aLm"); if (almacen != null && !almacen.isEmpty()) {for (Almacen al : almacen) {%>
+                        <option value="<%= al.getIdAlmacen() %>"><%= al.getNombre() %></option>
+                        <% }} else { %><option disabled>No hay almacenes registradas disponibles</option><% } %>
+                    </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Imagen del Producto</label>
@@ -193,6 +192,8 @@
             </form>
         </div>
     </div>
+                    
+
     
     <div id="deleteProductoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
@@ -206,5 +207,17 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/js/producto-Admin.js"></script>
+    
+    <% 
+            String message = (String) request.getAttribute("message");
+            String messageType = (String) request.getAttribute("messageType");
+            if (message != null && messageType != null) { 
+        %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+        <%
+            } 
+        %>
 </body>
 </html>

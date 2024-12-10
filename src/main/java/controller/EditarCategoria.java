@@ -7,13 +7,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Categoria;
 
 /**
  *
  * @author Smit
  */
-@WebServlet(name = "EliminarCategoria", urlPatterns = {"/EliminarCategoria"})
-public class EliminarCategoria extends HttpServlet {
+@WebServlet(name = "EditarCategoria", urlPatterns = {"/EditarCategoria"})
+public class EditarCategoria extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -24,26 +25,25 @@ public class EliminarCategoria extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idACategoriaParam = request.getParameter("idCategoria");
-        int idCategoria;
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
+        String nombre = request.getParameter("nombre");
+        String descripcion = request.getParameter("descripcion");
         
-        try {
-            idCategoria = Integer.parseInt(idACategoriaParam);
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de almacén no válido");
-            return;
-        }
-
-        CategoriaDAO categoriaDao = new CategoriaDAO();
-        boolean eliminado = categoriaDao.Eliminar(idCategoria);
+        Categoria ctg = new Categoria();
+        ctg.setIdCategoria(idCategoria);
+        ctg.setNombre(nombre);
+        ctg.setDescripcion(descripcion);
         
-        if (eliminado) {
-            request.setAttribute("message", "Se elimino correctamente la categoria.");
+        CategoriaDAO ctgDao= new CategoriaDAO();
+        boolean exitoso = ctgDao.Editar(ctg);
+        
+        if (exitoso) {
+            request.setAttribute("message", "Se editó correctamente la categoria.");
             request.setAttribute("messageType", "success");
             request.getRequestDispatcher("ListarCategoria").forward(request, response);
         } else {
-            request.setAttribute("message", "No se pudo eliminar la categoria. Inténtelo de nuevo.");
+            request.setAttribute("message", "No se pudo editar la categoria. Inténtelo de nuevo.");
             request.setAttribute("messageType", "error");
             request.getRequestDispatcher("ListarCategoria").forward(request, response);
         }

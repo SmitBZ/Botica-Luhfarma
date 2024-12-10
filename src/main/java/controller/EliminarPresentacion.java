@@ -37,11 +37,15 @@ public class EliminarPresentacion extends HttpServlet {
 
         PresentacionDAO peset = new PresentacionDAO();
         boolean eliminado = peset.Eliminar(idPresentacion);
-
+        
         if (eliminado) {
-            response.sendRedirect(request.getContextPath() + "/ListarPresentaciones?success=Eliminado");
+            request.setAttribute("message", "Se elimino correctamente la presentación.");
+            request.setAttribute("messageType", "success");
+            request.getRequestDispatcher("ListarPresentaciones").forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/ListarPresentaciones?error=NoSePudoEliminar");
+            request.setAttribute("message", "Hubo un error al eliminar la presentación.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarPresentaciones").forward(request, response);
         }
     }
 
