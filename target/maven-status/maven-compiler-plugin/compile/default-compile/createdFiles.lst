@@ -46,7 +46,6 @@ controller\RegistrarVenta.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class
-controller\ExportarUsuario.class
 controller\EliminarUsuario.class
 com\botica\luhfarma\resources\JakartaEE11Resource.class
 controller\ListarReporte.class
