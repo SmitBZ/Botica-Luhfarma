@@ -153,6 +153,9 @@
     <div id="provedorEdit" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
         <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6">
             <div class="flex justify-between items-center mb-4">
+                <form method="post" action="ExportarProveedores">
+                    <button class="btn btn-success"><i class="fas fa-file-excel mr-2"></i>Exportar a Excel</button>
+                </form>
                 <h3 class="text-lg font-bold text-gray-900">Nuevo Proveedor</h3>
                 <button onclick="closeEditProveedor()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>

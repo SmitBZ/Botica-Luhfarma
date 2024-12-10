@@ -68,6 +68,9 @@
                     </div>
                 </form>
                 <div class="flex space-x-2">
+                    <form method="post" action="ExportarProductos">
+                        <button class="btn btn-success"><i class="fas fa-file-excel mr-2"></i>Exportar a Excel</button>
+                    </form>
                     <button class="btn btn-primary" onclick="openModal()"><i class="fas fa-plus mr-2"></i>Nuevo Producto</button>
                 </div>
             </div>
@@ -103,7 +106,9 @@
                             <td><%=pr.getAlmacen()%></td>
                             <td><%=pr.getPresentacion()%></td>
                             <td class="flex space-x-2">
-                                <button class="text-blue-600 hover:text-blue-800" onclick=""><i class="fas fa-edit"></i></button>
+                                <button class="text-blue-600 hover:text-blue-800" onclick="openEditModal('<%= pr.getIdProducto() %>', '<%= pr.getNombre() %>',
+                                        '<%=pr.getCategoria()%>', '<%=pr.getPrecio()%>', '<%=pr.getStock()%>', '<%=pr.getFechaP()%>', '<%=pr.getFechaV()%>', 
+                                        '<%=pr.getPresentacion()%>', '<%=pr.getAlmacen()%>', '<%=pr.getDescripcion()%>')"><i class="fas fa-edit"></i></button>
                                 <button class="text-red-600 hover:text-red-900" onclick="openDeleteModal(<%= pr.getIdProducto() %>)"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -186,15 +191,92 @@
                     <textarea name="txtDescripcion" id="txtDescripcion" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancelar</button>
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Guardar Producto</button>
                 </div>
             </form>
         </div>
     </div>
                     
-
-    
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800" id="modalTitle">Editar Producto</h3>
+                <button onclick="closeEditModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editproductForm" class="space-y-4" method="post" action="${pageContext.request.contextPath}/EditarProducto" enctype="multipart/form-data">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="hidden" id="editProductoID" name="idProducto">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
+                        <input type="text" name="nombre" id="editNombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Categoría</label>
+                        <select name="categoria" id="editCategoria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">Seleccionar categoría</option>
+                            <% List<Categoria> Lista = (List<Categoria>) request.getAttribute("aLista"); if (Lista != null && !Lista.isEmpty()) {for (Categoria ct : Lista) {%>
+                            <option value="<%= ct.getIdCategoria() %>"><%= ct.getNombre() %></option>
+                            <% }} else { %><option disabled>No hay categorías registradas disponibles</option><% } %>
+                        </select>
+                    </div> 
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Precio</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">S/</span>
+                            </div>
+                            <input type="text" name="precio" id="editPrecio" step="0.01" class="pl-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Cantidad en Inventario</label>
+                        <input type="text" name="cantidad" id="editCantidad" min="1" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Fecha de Producción</label>
+                        <input type="date" name="fechaProd" id="editFechaPr" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
+                        <input type="date" name="fechaVen" id="editFechaVen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Tipo de Presentación</label>
+                    <select name="presentacion" id="editPresentacion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Seleccionar presentación</option>
+                        <% List<Presentacion> Prese = (List<Presentacion>) request.getAttribute("aPres");if (Prese != null && !Prese.isEmpty()) {for (Presentacion pr : Prese) { %>
+                        <option value="<%= pr.getIdPresentacion() %>"><%= pr.getNombre() %></option>
+                        <% }} else { %><option disabled>No hay presentaciones registradas disponibles</option><% } %>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Almacén</label>
+                    <select name="almacen" id="editAlmacen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Seleccionar almacén</option>
+                        <% List<Almacen> Almacen = (List<Almacen>) request.getAttribute("aLm"); if (Almacen != null && !Almacen.isEmpty()) {for (Almacen al : Almacen) {%>
+                        <option value="<%= al.getIdAlmacen() %>"><%= al.getNombre() %></option>
+                        <% }} else { %><option disabled>No hay almacenes registradas disponibles</option><% } %>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Imagen del Producto</label>
+                    <input type="file" name="imagen" id="editImagen" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                    <textarea name="descripcion" id="editDescripcion" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+                    
     <div id="deleteProductoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-6 w-96">
                 <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar producto</h2>

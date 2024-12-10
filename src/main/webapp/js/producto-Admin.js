@@ -103,3 +103,23 @@ function confirmDelete() {
         notification.remove();
     }, 3000);
 }
+
+function openEditModal(id, Nombre, Categoria, Precio, Cantidad, FechaP, FechaV, Presentacion, Almacen, Descripcion){
+    document.getElementById('editProductoID').value = id;
+    document.getElementById('editNombre').value = Nombre;
+    document.getElementById('editCategoria').value = Categoria;
+    document.getElementById('editPrecio').value = Precio;
+    document.getElementById('editCantidad').value = Cantidad;
+    document.getElementById('editFechaPr').value = FechaP;
+    document.getElementById('editFechaVen').value = FechaV;
+    document.getElementById('editPresentacion').value = Presentacion;
+    document.getElementById('editAlmacen').value = Almacen;
+    document.getElementById('editDescripcion').value = Descripcion;
+    document.getElementById('editModal').classList.remove('hidden');
+}
+
+
+function closeEditModal(){
+    document.getElementById('editModal').classList.add('hidden');
+}
+
