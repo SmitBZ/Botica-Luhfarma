@@ -1,3 +1,4 @@
+controller\EditarProducto.class
 model\CompraProveedor.class
 com\botica\luhfarma\JakartaRestConfiguration.class
 model\Reporte.class
@@ -6,6 +7,7 @@ model\Venta.class
 model\Compra.class
 controller\ListarCategoria.class
 controller\ListarPresentaciones.class
+controller\EditarUsuario.class
 util\Conexion.class
 dao\AlmacenDAO.class
 controller\IniciarSesion.class
@@ -30,6 +32,7 @@ controller\RegistrarAlmacen.class
 controller\RegistrarCliente.class
 dao\ProveedorDAO.class
 controller\EditarPresentacion.class
+controller\EditarProveedor.class
 controller\RegistrarCategoria.class
 model\Usuario.class
 model\Categoria.class

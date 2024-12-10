@@ -49,11 +49,14 @@ public class RegistrarUsuario extends HttpServlet {
         us.setRol(Rol);
 
         boolean yaRegistrado = US.RegistrarUsuario(us);
-        if (yaRegistrado) {
-            request.setAttribute("mensaje", "El usuario fue registrado");
+        if (!yaRegistrado) {
+            request.setAttribute("message", "Se agrego correctamente el usuario.");
+            request.setAttribute("messageType", "success");
             request.getRequestDispatcher("ListarUsuario").forward(request, response);
         } else {
-            response.sendRedirect("ListarUsuario");
+            request.setAttribute("message", "No se pudo agregar el usuario. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error");
+            request.getRequestDispatcher("ListarUsuario").forward(request, response);
         }
     }
 
