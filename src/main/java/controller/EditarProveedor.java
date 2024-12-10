@@ -2,6 +2,7 @@ package controller;
 
 import dao.ProveedorDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,8 +14,8 @@ import model.Proveedor;
  *
  * @author Smit
  */
-@WebServlet(name = "RegistrarProveedor", urlPatterns = {"/RegistrarProveedor"})
-public class RegistrarProveedor extends HttpServlet {
+@WebServlet(name = "EditarProveedor", urlPatterns = {"/EditarProveedor"})
+public class EditarProveedor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,36 +27,34 @@ public class RegistrarProveedor extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String Nombre = request.getParameter("txtNombre");
-        String Direccion = request.getParameter("txtDireccion");
-        String Email = request.getParameter("txtCorreo");
-        String Telefono = request.getParameter("txtTelefono");
-        String RUC = request.getParameter("txtRuc");
-        String Entidad = request.getParameter("txtEntidad");
+        int idProveedor = Integer.parseInt(request.getParameter("idProveedor"));
+        String nombre = request.getParameter("nombre");
+        String direccion = request.getParameter("direccion");
+        String correo = request.getParameter("correo");
+        String telefono = request.getParameter("telefono");
+        String ruc = request.getParameter("ruc");
+        String entidad = request.getParameter("entidad");
         
-        if(Nombre.isEmpty() || Direccion.isEmpty() || Email.isEmpty() || Telefono.isEmpty() || RUC.isEmpty() || Entidad.isEmpty()){
-            request.getRequestDispatcher("ListarProveedor").forward(request, response);
-            return;
-        }
-        
-        ProveedorDAO prd = new ProveedorDAO();
         Proveedor pr = new Proveedor();
-        pr.setNombre(Nombre);
-        pr.setDireccion(Direccion);
-        pr.setCorreo(Email);
-        pr.setTelefono(Telefono);
-        pr.setRuc(RUC);
-        pr.setEntidad(Entidad);
+        pr.setIdProveedor(idProveedor);
+        pr.setNombre(nombre);
+        pr.setDireccion(direccion);
+        pr.setCorreo(correo);
+        pr.setTelefono(telefono);
+        pr.setRuc(ruc);
+        pr.setEntidad(entidad);
+
+        // Instanciar el DAO y realizar la operación
+        ProveedorDAO proDao = new ProveedorDAO();
+        boolean exitoso = proDao.Editar(pr);
         
-        boolean registrado = prd.Registrar(pr);
-        
-        if(!registrado){
-            request.setAttribute("message", "Se agrego correctamente el proveedor");
+        if (exitoso) {
+            request.setAttribute("message", "Se edito correctamente el proveedor.");
             request.setAttribute("messageType", "success"); // Indica que es un mensaje de éxito
             request.getRequestDispatcher("ListarProveedor").forward(request, response);
-        }else{
-            request.setAttribute("message", "No se pudo agregar el proveedor. Inténtelo de nuevo.");
-            request.setAttribute("messageType", "error");
+        } else {
+            request.setAttribute("message", "No se pudo eliminar el proveedor. Inténtelo de nuevo.");
+            request.setAttribute("messageType", "error"); // Indica que es un mensaje de error
             request.getRequestDispatcher("ListarProveedor").forward(request, response);
         }
     }

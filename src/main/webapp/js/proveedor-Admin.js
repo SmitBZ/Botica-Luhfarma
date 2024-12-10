@@ -33,18 +33,14 @@ window.addEventListener('resize', function() {
         body.classList.remove('sidebar-closed');
     }
 });
-        // Variables globales
-        let currentDeleteId = null;
-        let sidebarVisible = true;
 
-        // Funciones de Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-        }
+function openModal() {
+    document.getElementById('proveedorModal').classList.add('show');
+}
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
+function closeModal() {
+    document.getElementById('proveedorModal').classList.remove('show');
+}
 
 
 function openModal() {
@@ -52,36 +48,26 @@ function openModal() {
     modal.classList.remove('hidden');
 }
 
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
+function closeModal() {
+    const modal = document.getElementById('proveedorModal');
     modal.classList.add('hidden');
 }
 
-
-function editProveedor(button) {
-    // Obtener datos del proveedor desde los atributos del botón
-    const id = button.getAttribute('data-id');
-    const nombre = button.getAttribute('data-nombre');
-    const ruc = button.getAttribute('data-ruc');
-    const correo = button.getAttribute('data-correo');
-    const telefono = button.getAttribute('data-telefono');
-    const direccion = button.getAttribute('data-direccion');
-    const entidad = button.getAttribute('data-entidad');
-
-    // Asignar datos a los campos del formulario del modal
-    document.getElementById('txtNombre').value = nombre;
-    document.getElementById('txtRuc').value = ruc;
-    document.getElementById('txtCorreo').value = correo;
-    document.getElementById('txtTelefono').value = telefono;
-    document.getElementById('txtDireccion').value = direccion;
-    document.getElementById('txtEntidad').value = entidad;
-
-    // Cambiar el encabezado del modal para indicar que es edición
-    document.querySelector('#proveedorModal h3').textContent = 'Editar Proveedor';
-
-    // Abrir el modal
-    openModal('proveedorModal');
+function openEditProveedor(idProveedor, nombre, ruc, correo, telefono, direccion, entidad){
+    document.getElementById('editId').value = idProveedor;
+    document.getElementById('editNombre').value = nombre;
+    document.getElementById('editRuc').value = ruc;
+    document.getElementById('editCorreo').value = correo;
+    document.getElementById('editTelefono').value = telefono;
+    document.getElementById('editDireccion').value = direccion;
+    document.getElementById('editEntidad').value = entidad;
+    document.getElementById('provedorEdit').classList.remove('hidden');
 }
+
+function closeEditProveedor() {
+    document.getElementById('provedorEdit').classList.add('hidden');
+}
+
 
 let currentProveedorID = null;
 
@@ -103,5 +89,27 @@ function confirmDelete() {
     closeDeleteModal();
 }
 
-        
-        
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.innerText = message;
+    notification.style.position = 'fixed';
+    notification.style.top = '70px';
+    notification.style.right = '20px';
+    notification.style.color = '#fff';
+    notification.style.padding = '10px 20px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+    notification.style.zIndex = '1000';
+
+    if (type === 'success') {
+        notification.style.backgroundColor = '#4CAF50';
+    } else if (type === 'error') {
+        notification.style.backgroundColor = '#f44336';
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
