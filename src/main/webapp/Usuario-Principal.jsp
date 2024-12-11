@@ -1,3 +1,5 @@
+<%@page import="model.Producto"%>
+<%@page import="java.util.List"%>
 <%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -76,7 +78,27 @@
                     <p>Todo para ti</p>
                 </div>
             </section>
-            <section class="products-grid" id="productsGrid"></section>
+            <section class="products-grid" id="productsGrid">
+            <%
+                List<Producto> productos = (List<Producto>) request.getAttribute("aProduct");
+                if (productos != null) {
+                    for (Producto producto : productos) {
+            %>
+            <div class="product-card" data-category="<%= producto.getCategoria()%>">
+                <img src="<%= producto.getImg()%>" alt="<%= producto.getNombre() %>" class="product-image">
+                <h4><%= producto.getNombre() %></h4>
+                <p>S/$<%= producto.getPrecio() %></p>
+                <button class="add-to-cart-btn" onclick="addToCart(<%= producto.getIdProducto() %>)">Añadir al carrito</button>
+            </div>
+            <%
+                    }
+                } else {
+            %>
+                <p>No hay productos disponibles.</p>
+            <%
+                }
+            %>
+            </section>
         </main>
         <div id="cartModal" class="modal">
             <div class="modal-content">
@@ -199,7 +221,7 @@
                 </div>
             </div>
         </footer>
-                
+
         <script src="js/principal-Usuario.js"></script>
         
         <script>
