@@ -1,21 +1,22 @@
 package controller;
 
-import dao.UsuarioDAO;
+import dao.ProductoDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Usuario;
+import java.util.List;
+import model.Producto;
 
 /**
  *
  * @author Smit
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/IniciarSesion"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "MostrarProductos", urlPatterns = {"/MostrarProductos"})
+public class MostrarProductos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,35 +28,11 @@ public class IniciarSesion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String Correo = request.getParameter("txtCorreo");
-        String Contraseña = request.getParameter("txtPassword");
+        ProductoDAO prd = new ProductoDAO();
+        List<Producto> Producto = prd.Mostrar();
         
-        if(Correo.isEmpty() || Contraseña.isEmpty()){
-            request.setAttribute("error", "Los campos no pueden estar vacíos");
-            request.getRequestDispatcher("principal.jsp").forward(request, response);
-            return;
-        }
-        
-        UsuarioDAO usd = new UsuarioDAO();
-        Usuario us = new Usuario();
-        us.setCorreo(Correo);
-        us.setContraseña(Contraseña);
-        us = usd.Autenticar(us);
-        
-        if(us != null){
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(900);
-            session.setAttribute("usuario", us);
-            switch (us.getRol()) {
-                case "cliente" -> response.sendRedirect("MostrarProductos");
-                case "administrador" -> response.sendRedirect("CantidadClientes");
-                case "empleado" -> response.sendRedirect("ListarVentaEmpleado");
-                default -> {
-                    request.setAttribute("error", "Correo o contraseña incorrects");
-                    request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
-                }
-            }
-        }
+        request.setAttribute("aProduct", Producto);
+        request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
