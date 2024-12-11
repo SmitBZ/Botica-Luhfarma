@@ -8,6 +8,7 @@ const products = [
 ];
 
 const cart = [];
+let cartCount = 0;
 
 function loadProducts(category) {
     const productsGrid = document.getElementById('productsGrid');
@@ -30,9 +31,23 @@ function loadProducts(category) {
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (product) {
+        cartCount++;
         cart.push(product);
         updateCart();
+        updateCartCount();
     }
+}
+function updateCartCount() {
+    const cartCountElement = document.querySelector('.cart-count'); // Elemento donde está el contador
+    cartCountElement.innerText = cartCount; // Actualiza el texto del contador
+}
+
+function removeFromCart(index) {
+    // Elimina el producto del carrito
+    cart.splice(index, 1);
+    cartCount--; // Decrementa el contador de productos
+    updateCart();  // Actualiza la lista de productos en el carrito
+    updateCartCount(); // Actualiza el contador de productos en el botón
 }
 
 function updateCart() {
@@ -54,11 +69,6 @@ function updateCart() {
     });
 
     cartTotal.innerHTML = `Total: S/${total.toFixed(2)}`;
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
 }
 
 function openCart() {

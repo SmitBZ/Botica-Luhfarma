@@ -1,3 +1,4 @@
+<%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,20 +28,19 @@
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <div class="cart-icon">
-                    <button class="cart-button" onclick="openCart()"><span class="cart-count">0 </span>Carrito</button>
+                    <button class="cart-button" onclick="openCart()"><span class="cart-count">0 </span> Carrito</button>
                 </div>
                 <div class="cart-login">
-                    <% String nombreUsuario = (String) request.getAttribute("nombreUsuario"); %>
-                    <% if(nombreUsuario != null){ %>
+                <% Usuario usuario = (Usuario) session.getAttribute("usuario");if (usuario != null) {String nombreUsuario = usuario.getNombre();%>
                     <div class="mt-auto pt-4 border-t">
                         <div class="flex items-center">
                             <img src="img/pr.webp" alt="Usuario" class="w-8 h-8 rounded-full">
                             <div class="ml-3">
                                 <p class="text-sm font-medium text-gray-700"><%= nombreUsuario %></p>
                             </div>
+                            <a href="${pageContext.request.contextPath}/SalirSesion" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
                         </div>
                     </div>
-
                     <%}else{ %>
                     <button class="cart-button" onclick="openLoginModal()">
                         <i class="fas fa-user"></i>

@@ -54,7 +54,7 @@
     </header>
     <br><br><br><br>
 <div class="container mx-auto p-4 grid grid-cols-2 gap-4">
-        <form id="formVenta" action="RegistrarVentaEmpleado" method="post">
+        <form id="formVenta" action="RegistrarVenta" method="post">
         <div class="card bg-white shadow-md rounded-lg p-4 mb-4">
             <h2 class="text-lg font-bold">Nueva Venta</h2>
             <div class="form-group">

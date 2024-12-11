@@ -65,11 +65,11 @@ public class RegistrarCliente extends HttpServlet {
         
         if(nombreUsuario != null){
             request.setAttribute("nombreUsuario", nombreUsuario);
-            request.setAttribute("mensaje", "Registro exitoso, Bienvenido " + nombreUsuario + "!");
+            request.setAttribute("mensaje", "Registro exitoso" + "!");
             request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
         }else{
             request.setAttribute("mensaje", "El correo ya está registrado");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
         }
     }
 

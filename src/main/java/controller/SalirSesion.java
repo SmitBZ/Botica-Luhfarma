@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Smit
  */
-@WebServlet(name = "svl_Exit", urlPatterns = {"/svl_Exit"})
+@WebServlet(name = "SalirSesion", urlPatterns = {"/SalirSesion"})
 public class SalirSesion extends HttpServlet {
 
     /**
