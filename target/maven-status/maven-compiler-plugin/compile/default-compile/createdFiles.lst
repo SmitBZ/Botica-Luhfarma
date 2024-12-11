@@ -54,7 +54,10 @@ controller\RegistrarVenta.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class
+<<<<<<< HEAD
+=======
 controller\EditarAlmacen.class
+>>>>>>> 4b619bbd5ab86e53e904f8a206a8d67825590d15
 controller\EliminarUsuario.class
 com\botica\luhfarma\resources\JakartaEE11Resource.class
 controller\ListarReporte.class

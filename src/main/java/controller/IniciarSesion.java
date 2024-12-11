@@ -44,7 +44,11 @@ public class IniciarSesion extends HttpServlet {
         
         if(us != null){
             HttpSession session = request.getSession();
+<<<<<<< HEAD
+            session.setMaxInactiveInterval(15 * 60);
+=======
             session.setMaxInactiveInterval(900);
+>>>>>>> ff14089917cbe30a67dde729b22403ca17f2cdf0
             session.setAttribute("usuario", us);
             switch (us.getRol()) {
                 case "cliente" -> response.sendRedirect("Usuario-Principal.jsp");

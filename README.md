@@ -18,7 +18,7 @@
   - **JDBC** para la conexión con la base de datos.
 - **MySQL**: Sistema de gestión de base de datos para almacenar información de productos, usuarios, ventas y más.
 - **HTML, CSS y JavaScript**: Para la creación de la interfaz web y la interacción con el usuario.
-- **WildFly**: Servidor de aplicaciones utilizado para desplegar la aplicación.
+- **Payara**: Servidor de aplicaciones utilizado para desplegar la aplicación.
 
 ## Instalación
 
