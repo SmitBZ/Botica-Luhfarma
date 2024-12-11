@@ -69,11 +69,11 @@
                     </div>
                 </form>
                 <div class="relative flex items-center space-x-2">
+                    <form method="post" action="ExportarUsuarios">
+                        <button class="btn btn-success"><i class="fas fa-file-excel mr-2"></i>Exportar a Excel</button>
+                    </form>
                     <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md flex items-center transition duration-300" onclick="toggleAddUserModal()">
                         <i class="fas fa-user-plus mr-2"></i>Agregar Usuario
-                    </button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-md flex items-center transition duration-300" onclick="location.href='${pageContext.request.contextPath}/ExportarUsuario'" >
-                        <i class="fas fa-file-export mr-2"></i>Exportar
                     </button>
                 </div>
             </div>

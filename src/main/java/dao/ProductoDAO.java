@@ -45,8 +45,8 @@ public class ProductoDAO {
         return exitoso;
     }
     
-    public boolean editar(Producto producto) {
-        consulta = "CALL sp_Editar_Producto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    public boolean Editar(Producto producto) {
+        consulta = "CALL sp_Editar_Producto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         boolean exitoso = false;
         
         try {
@@ -63,6 +63,7 @@ public class ProductoDAO {
             cst.setString(8, producto.getAlmacen());
             cst.setString(9, producto.getCategoria());
             cst.setString(10, producto.getPresentacion());
+            cst.setInt(11, producto.getStock());
             
             cst.execute();
             exitoso = true;

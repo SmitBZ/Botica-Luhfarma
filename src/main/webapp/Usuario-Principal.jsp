@@ -40,6 +40,7 @@
                             </div>
                         </div>
                     </div>
+
                     <%}else{ %>
                     <button class="cart-button" onclick="openLoginModal()">
                         <i class="fas fa-user"></i>

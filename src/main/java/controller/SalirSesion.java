@@ -1,6 +1,5 @@
 package controller;
 
-import dao.UsuarioDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,14 +7,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Usuario;
 
 /**
  *
  * @author Smit
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/IniciarSesion"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "svl_Exit", urlPatterns = {"/svl_Exit"})
+public class SalirSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,39 +25,12 @@ public class IniciarSesion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String Correo = request.getParameter("txtCorreo");
-        String Contraseña = request.getParameter("txtPassword");
-        
-        if(Correo.isEmpty() || Contraseña.isEmpty()){
-            request.setAttribute("error", "Los campos no pueden estar vacíos");
-            request.getRequestDispatcher("principal.jsp").forward(request, response);
-            return;
+        HttpSession session = request.getSession(false);
+        if(session !=null){
+            session.invalidate();
         }
         
-        UsuarioDAO usd = new UsuarioDAO();
-        Usuario us = new Usuario();
-        us.setCorreo(Correo);
-        us.setContraseña(Contraseña);
-        us = usd.Autenticar(us);
-        
-        if(us != null){
-            HttpSession session = request.getSession();
-<<<<<<< HEAD
-            session.setMaxInactiveInterval(15 * 60);
-=======
-            session.setMaxInactiveInterval(900);
->>>>>>> ff14089917cbe30a67dde729b22403ca17f2cdf0
-            session.setAttribute("usuario", us);
-            switch (us.getRol()) {
-                case "cliente" -> response.sendRedirect("Usuario-Principal.jsp");
-                case "administrador" -> response.sendRedirect("CantidadClientes");
-                case "empleado" -> response.sendRedirect("ListarVentaEmpleado");
-                default -> {
-                    request.setAttribute("error", "Correo o contraseña incorrects");
-                    request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
-                }
-            }
-        }
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

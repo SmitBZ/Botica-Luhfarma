@@ -3,6 +3,7 @@ model\CompraProveedor.class
 com\botica\luhfarma\JakartaRestConfiguration.class
 model\Reporte.class
 model\Inventario.class
+controller\ExportarUsuarios.class
 model\Venta.class
 model\Compra.class
 controller\ListarCategoria.class
@@ -30,11 +31,13 @@ controller\ListarInventarioEmpleado.class
 controller\ListarProveedor.class
 controller\RegistrarAlmacen.class
 controller\RegistrarCliente.class
+controller\ExportarProductos.class
 dao\ProveedorDAO.class
 controller\EditarPresentacion.class
 controller\EditarProveedor.class
 controller\RegistrarCategoria.class
 model\Usuario.class
+controller\ExportarProveedores.class
 model\Categoria.class
 model\Proveedor.class
 controller\ListarProductos.class
