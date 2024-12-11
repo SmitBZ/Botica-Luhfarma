@@ -196,5 +196,16 @@
             
     <%-- JavaScript externo para funcionalidades dinámicas --%>
     <script src="${pageContext.request.contextPath}/js/venta-Employee.js"></script>
+    <% 
+            String message = (String) request.getAttribute("message");
+            String messageType = (String) request.getAttribute("messageType");
+            if (message != null && messageType != null) { 
+        %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+        <%
+            } 
+        %>
 </body>
 </html>

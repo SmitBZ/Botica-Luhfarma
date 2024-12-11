@@ -77,6 +77,9 @@
             Buscar
         </button>
     </form>
+    <form method="post" action="ExportarReporte">
+        <button class="btn btn-success"><i class="fas fa-file-excel mr-2"></i>Exportar a Excel</button>
+    </form>
     </div>
 
         <div class="table-container">

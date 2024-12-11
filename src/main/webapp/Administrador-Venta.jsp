@@ -3,7 +3,7 @@
 <%@page import="model.Producto"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
-<%@ page session="true" %>
+<%@ page session="true"%>
 <%@page import="model.Usuario"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -110,9 +110,18 @@
             <button id="confirmar-venta" type="submit" class="mt-4 w-full bg-green-600 text-white p-2 rounded"><i class="fas fa-check"></i>Confirmar Venta</button>
         </div>
     </div>
-
-
-
+                    
     <script src="${pageContext.request.contextPath}/js/venta-Admin.js"></script>
+    <% 
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) { 
+    %>
+        <script>
+            showNotification("<%= message %>", "<%= messageType %>");
+        </script>
+    <%
+            }
+    %>
 </body>
 </html>

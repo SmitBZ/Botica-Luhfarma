@@ -134,3 +134,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.innerText = message;
+    notification.style.position = 'fixed';
+    notification.style.top = '70px';
+    notification.style.right = '20px';
+    notification.style.color = '#fff';
+    notification.style.padding = '10px 20px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+    notification.style.zIndex = '1000';
+
+    if (type === 'success') {
+        notification.style.backgroundColor = '#4CAF50';
+    } else if (type === 'error') {
+        notification.style.backgroundColor = '#f44336';
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+

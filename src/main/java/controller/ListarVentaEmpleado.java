@@ -39,6 +39,13 @@ public class ListarVentaEmpleado extends HttpServlet {
         //Lista de Categoria Presentacion
         PresentacionDAO dao = new PresentacionDAO();
         List<Presentacion> Presentacion = dao.Mostrar();
+        
+        String message = (String) request.getAttribute("message");
+        String messageType = (String) request.getAttribute("messageType");
+        if (message != null && messageType != null) {
+            request.setAttribute("message", message);
+            request.setAttribute("messageType", messageType);
+        }
 
         request.setAttribute("apres", Presentacion);
         request.setAttribute("pro", Producto);

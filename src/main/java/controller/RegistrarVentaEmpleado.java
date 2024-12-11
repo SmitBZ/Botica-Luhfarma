@@ -58,9 +58,13 @@ public class RegistrarVentaEmpleado extends HttpServlet {
 
             VentaDAO ventaDAO = new VentaDAO();
             if (ventaDAO.registrarVenta(venta)) {
-                response.sendRedirect("ListarVentaEmpleado");
+                request.setAttribute("message", "Se registro correctamente la venta");
+                request.setAttribute("messageType", "success");
+                request.getRequestDispatcher("ListarVentaEmpleado").forward(request, response);
             } else {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "No se pudo registrar la venta.");
+                request.setAttribute("message", "No se pudo registrar la venta. Inténtelo de nuevo.");
+                request.setAttribute("messageType", "error");
+                request.getRequestDispatcher("ListarVentaEmpleado").forward(request, response);
             }
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Formato de parámetros inválido.");

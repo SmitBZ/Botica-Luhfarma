@@ -27,6 +27,7 @@ controller\CantidadClientes.class
 controller\EliminarCategoria.class
 dao\PresentacionDAO.class
 controller\ListarUsuario.class
+controller\ExportarReporte.class
 controller\ListarInventarioEmpleado.class
 controller\ListarProveedor.class
 controller\RegistrarAlmacen.class
@@ -35,6 +36,7 @@ controller\ExportarProductos.class
 dao\ProveedorDAO.class
 controller\EditarPresentacion.class
 controller\EditarProveedor.class
+controller\SalirSesion.class
 controller\RegistrarCategoria.class
 model\Usuario.class
 controller\ExportarProveedores.class
@@ -54,10 +56,7 @@ controller\RegistrarVenta.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class
-<<<<<<< HEAD
-=======
 controller\EditarAlmacen.class
->>>>>>> 4b619bbd5ab86e53e904f8a206a8d67825590d15
 controller\EliminarUsuario.class
 com\botica\luhfarma\resources\JakartaEE11Resource.class
 controller\ListarReporte.class
