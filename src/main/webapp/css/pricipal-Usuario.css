@@ -347,3 +347,25 @@
 .add-to-cart:hover {
     background-color: #42a7db; 
 }
+
+.add-to-cart-btn {
+    background-color: #4FC3F7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #42a7db;
+    transform: scale(1.05);
+}
+
+.add-to-cart-btn:active {
+    background-color: #1e9dd6;
+    transform: scale(0.95);
+}
