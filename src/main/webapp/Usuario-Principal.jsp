@@ -84,21 +84,26 @@
                 if (productos != null) {
                     for (Producto producto : productos) {
             %>
-            <div class="product-card" data-category="<%= producto.getCategoria()%>">
-                <img src="<%= producto.getImg()%>" alt="<%= producto.getNombre() %>" class="product-image">
-                <h4><%= producto.getNombre() %></h4>
-                <p>S/$<%= producto.getPrecio() %></p>
-                <button class="add-to-cart-btn" onclick="addToCart(<%= producto.getIdProducto() %>)">Añadir al carrito</button>
-            </div>
+                <div class="product-card" data-id="<%= producto.getIdProducto() %>"
+                    data-nombre="<%= producto.getNombre() %>"
+                    data-precio="<%= producto.getPrecio() %>"
+                    data-categoria="<%= producto.getCategoria() %>"
+                    data-img="<%= producto.getImg() %>">
+                    <img src="<%= producto.getImg() %>" alt="<%= producto.getNombre() %>" class="product-image">
+                    <h4><%= producto.getNombre() %></h4>
+                    <p>S/$<%= producto.getPrecio() %></p>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Añadir al carrito</button>
+                </div>
             <%
                     }
                 } else {
             %>
-                <p>No hay productos disponibles.</p>
+            <p>No hay productos disponibles.</p>
             <%
                 }
             %>
-            </section>
+        </section>
+
         </main>
         <div id="cartModal" class="modal">
             <div class="modal-content">
