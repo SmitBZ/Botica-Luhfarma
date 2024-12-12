@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.OutputStream;
-import java.nio.file.Paths;
 import model.Venta;
 
 /**

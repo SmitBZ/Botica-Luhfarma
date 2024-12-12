@@ -1,3 +1,4 @@
+<%@page import="model.Categoria"%>
 <%@page import="model.Producto"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Usuario"%>
@@ -24,9 +25,9 @@
         
         <header class="main-header">
             <div class="header-content">
-                <a href="principal.jsp" class="logo">LUHFARMA</a>
-                <form class="search-bar">
-                    <input type="text" class="search-input" placeholder="¿Que estas Buscando?">
+                <a href="MostrarProductos" class="logo">LUHFARMA</a>
+                <form class="search-bar" method="post" action="BuscarProducto">
+                    <input type="text" class="search-input"  name="txtBuscar"placeholder="¿Que estas Buscando?">
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <div class="cart-icon">
@@ -52,31 +53,13 @@
                 </div>
             </div>
         </header>        
-        <nav clas="nav-menu">
-            <div class="menu-content">
-                <ul class="menu-list">
-                    <li><a href="#" onclick="filterProducts('medicamentos')">Medicamentos</a></li>
-                    <li><a href="#" onclick="filterProducts('cuidado-personal')">Cuidado Personal</a></li>
-                    <li><a href="#" onclick="filterProducts('dermocosmetica')">Dermocosmetica</a></li>
-                    <li><a href="#" onclick="filterProducts('mama-bebe')">Mamá y Bebé</a></li>
-                    <li><a href="#" onclick="filterProducts('nutricion')">Nutrición</a></li>
-                </ul>
-            </div>
-        </nav>
         <main class="main-content">
             <section class="categories">
-                <div class="category-card" onclick="filterProducts('ofertas')">
-                    <h3>Ofertas</h3>
-                    <p>Hasta 50% dcto</p>
+                    <% List<Categoria> aLista = (List<Categoria>) request.getAttribute("aLista"); if (aLista != null && !aLista.isEmpty()) {for (Categoria ct : aLista) {%>
+                <div class="category-card">
+                    <a href="FiltrarCategoria?categoria=<%= ct.getNombre() %>" name="txtCategoria"><%= ct.getNombre() %></a>
                 </div>
-                <div class="category-card" onclick="filterProducts('medicamentos')">
-                    <h3>Medicamentos</h3>
-                    <p>Los mejores precios</p>
-                </div>
-                <div class="category-card" onclick="filterProducts('cuidado-personal')">
-                    <h3>Cuidado Personal</h3>
-                    <p>Todo para ti</p>
-                </div>
+                    <% }} else { %><h3>No disponible</h3><% } %>
             </section>
             <section class="products-grid" id="productsGrid">
             <%

@@ -172,4 +172,70 @@ public class ProductoDAO {
         }
         return proCli;
     }
+    
+    public List<Producto> Buscar(String nombreProducto) {
+        consulta = "CALL sp_Buscar_Producto(?);";
+        List<Producto> listaProductos = new ArrayList<>();
+
+        try {
+            Connection cn = Conexion.getConnection();
+            CallableStatement cst = cn.prepareCall(consulta);
+            
+            cst.setString(1, nombreProducto);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombre(rs.getString("Producto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setFechaP(rs.getDate("fechaprodu").toLocalDate());
+                producto.setFechaV(rs.getDate("fechacadu").toLocalDate());
+                producto.setImg(rs.getString("imagen"));
+                producto.setAlmacen(rs.getString("Almacen"));
+                producto.setCategoria(rs.getString("Categoria"));
+                producto.setPresentacion(rs.getString("Presentacion"));
+
+                listaProductos.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar productos: " + e.getMessage());
+        }
+        return listaProductos;
+    }
+    
+    public List<Producto> BuscarPorCategoria(String nombreCategoria) {
+        consulta = "call sp_Filtrar_Categoria(?);";
+        List<Producto> listaProductos = new ArrayList<>();
+
+        try {
+            Connection cn = Conexion.getConnection();
+            CallableStatement cst = cn.prepareCall(consulta);
+
+            cst.setString(1, nombreCategoria);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombre(rs.getString("Producto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setFechaP(rs.getDate("fechaprodu").toLocalDate());
+                producto.setFechaV(rs.getDate("fechacadu").toLocalDate());
+                producto.setImg(rs.getString("imagen"));
+                producto.setAlmacen(rs.getString("Almacen"));
+                producto.setCategoria(rs.getString("Categoria"));
+                producto.setPresentacion(rs.getString("Presentacion"));
+
+                listaProductos.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar productos por categoría: " + e.getMessage());
+        }
+        return listaProductos;
+    }
 }

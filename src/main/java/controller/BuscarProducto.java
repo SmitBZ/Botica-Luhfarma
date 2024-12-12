@@ -3,6 +3,7 @@ package controller;
 import dao.CategoriaDAO;
 import dao.ProductoDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,8 +17,8 @@ import model.Producto;
  *
  * @author Smit
  */
-@WebServlet(name = "MostrarProductos", urlPatterns = {"/MostrarProductos"})
-public class MostrarProductos extends HttpServlet {
+@WebServlet(name = "BuscarProducto", urlPatterns = {"/BuscarProducto"})
+public class BuscarProducto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,14 +30,18 @@ public class MostrarProductos extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProductoDAO prd = new ProductoDAO();
-        List<Producto> Producto = prd.Mostrar();
-        
+        String nombreProducto = request.getParameter("txtBuscar");
+
+        // Llamar al DAO para buscar productos
+        ProductoDAO productoDAO = new ProductoDAO();
+        List<Producto> Producto = productoDAO.Buscar(nombreProducto);
         CategoriaDAO alm = new CategoriaDAO();
         List<Categoria> Lista = alm.Mostrar();
-        
+
+        // Establecer los productos encontrados como atributo de la solicitud
         request.setAttribute("aProduct", Producto);
         request.setAttribute("aLista", Lista);
+        // Redirigir a la página de resultados
         request.getRequestDispatcher("Usuario-Principal.jsp").forward(request, response);
     }
 

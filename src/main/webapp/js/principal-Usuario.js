@@ -1,5 +1,4 @@
-
-    let cart = []; // Arreglo para almacenar los productos del carrito.
+let cart = []; // Arreglo para almacenar los productos del carrito.
 
     // Función para añadir un producto al carrito.
     function addToCart(event) {
