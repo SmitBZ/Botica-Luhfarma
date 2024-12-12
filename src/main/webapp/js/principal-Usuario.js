@@ -1,93 +1,139 @@
-const products = [
-    { id: 1, name: 'Aspirina', category: 'medicamentos', price: 20, image: 'img/aspirina.avif' },
-    { id: 2, name: 'Jabón Antibacterial', category: 'cuidado-personal', price: 15, image: 'img/jabon.png' },
-    { id: 3, name: 'Crema Hidratante', category: 'dermocosmetica', price: 30, image: 'img/crema.avif' },
-    { id: 4, name: 'Leche en Polvo', category: 'medicamentos', price: 40, image: 'img/leche.webp' },
-    { id: 5, name: 'Suplemento Nutricional', category: 'nutricion', price: 25, image: 'img/suplemento.webp' },
-    { id: 6, name: 'Shampu Tio Nacho', category: 'cuidado-personal' , price: 20, image : 'img/tio.webp'}
-];
 
-const cart = [];
-let cartCount = 0;
+    let cart = []; // Arreglo para almacenar los productos del carrito.
 
-function loadProducts(category) {
-    const productsGrid = document.getElementById('productsGrid');
-    productsGrid.innerHTML = '';
+    // Función para añadir un producto al carrito.
+    function addToCart(event) {
+        const productCard = event.target.closest('.product-card'); // Selecciona la tarjeta del producto.
+        const id = productCard.getAttribute('data-id');
+        const nombre = productCard.getAttribute('data-nombre');
+        const precio = parseFloat(productCard.getAttribute('data-precio'));
+        const img = productCard.getAttribute('data-img');
 
-    const filteredProducts = category ? products.filter(p => p.category === category) : products;
-    filteredProducts.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
-            <h4>${product.name}</h4>
-            <p>S/${product.price.toFixed(2)}</p>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Añadir al carrito</button>
-        `;
-        productsGrid.appendChild(productCard);
-    });
-}
+        // Verifica si el producto ya está en el carrito.
+        const existingProduct = cart.find(item => item.id === id);
 
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        cartCount++;
-        cart.push(product);
-        updateCart();
-        updateCartCount();
+        if (existingProduct) {
+            existingProduct.quantity += 1; // Incrementa la cantidad si ya existe.
+        } else {
+            // Añade el producto al carrito.
+            cart.push({ id, nombre, precio, img, quantity: 1 });
+        }
+
+        updateCartDisplay(); // Actualiza la visualización del carrito.
     }
-}
-function updateCartCount() {
-    const cartCountElement = document.querySelector('.cart-count'); // Elemento donde está el contador
-    cartCountElement.innerText = cartCount; // Actualiza el texto del contador
+
+    // Función para actualizar la visualización del carrito.
+    function updateCartDisplay() {
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartCount = document.querySelector('.cart-count');
+
+        // Limpia los elementos previos.
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        // Recorre los productos del carrito y genera su representación en HTML.
+        cart.forEach(product => {
+            const item = document.createElement('div');
+            item.classList.add('cart-item');
+            item.innerHTML = `
+                <img src="${product.img}" alt="${product.nombre}" class="cart-item-img">
+                <div class="cart-item-info">
+                    <h4>${product.nombre}</h4>
+                    <p>S/${product.precio.toFixed(2)}</p>
+                    <p>Cantidad: ${product.quantity}</p>
+                </div>
+                <button class="remove-btn" onclick="removeFromCart('${product.id}')">Eliminar</button>
+            `;
+            cartItems.appendChild(item);
+            total += product.precio * product.quantity;
+        });
+
+        // Actualiza el total y la cantidad de elementos en el carrito.
+        cartTotal.textContent = `Total: S/${total.toFixed(2)}`;
+        cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    // Función para eliminar un producto del carrito.
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId); // Filtra el producto que se desea eliminar.
+        updateCartDisplay(); // Actualiza la visualización del carrito.
+    }
+
+    // Abre el modal del carrito.
+    function openCart() {
+        document.getElementById('cartModal').style.display = 'block';
+    }
+
+    // Cierra el modal del carrito.
+    function closeCart() {
+        document.getElementById('cartModal').style.display = 'none';
+    }
+
+function checkout() {
+    // Abre el modal de pago.
+    document.getElementById('paymentModal').style.display = 'block';
 }
 
-function removeFromCart(index) {
-    // Elimina el producto del carrito
-    cart.splice(index, 1);
-    cartCount--; // Decrementa el contador de productos
-    updateCart();  // Actualiza la lista de productos en el carrito
-    updateCartCount(); // Actualiza el contador de productos en el botón
-}
+// Confirma el pago y cierra el modal de pago.
+/*function confirmPayment() {
+    fetch('ConfirmarPago', { method: 'POST' })
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Muestra el mensaje del servidor.
+            document.getElementById('add-to-cart').style.display = 'none'; // Cierra el modal de pago.
+            cart = []; // Limpia el carrito tras el pago.
+            updateCartDisplay(); // Actualiza la visualización del carrito.
+        })
+        .catch(error => console.error('Error:', error));
+}*/
+function confirmPayment() {
+    const modal = document.getElementById('paymentModal');
+    const inputs = modal.querySelectorAll('input[type="hidden"]');
 
-function updateCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-    
-    cartItems.innerHTML = '';
-    let total = 0;
+    if (!selectedProductId) {
+        console.error('No product selected.');
+        return;
+    }
 
-    cart.forEach((item, index) => {
-        cartItems.innerHTML += `
-            <div class="cart-item">
-                <span>${item.name}</span>
-                <span>S/${item.price.toFixed(2)}</span>
-                <button onclick="removeFromCart(${index})">Eliminar</button>
-            </div>
-        `;
-        total += item.price;
+    const productData = cart.find(item => item.id === selectedProductId); // Obtiene el producto del carrito
+
+    // Actualiza los valores del formulario con los datos del producto seleccionado
+    inputs.forEach(input => {
+        const name = input.getAttribute('name');
+        if (productData && productData[name]) {
+            input.value = productData[name];
+        }
     });
 
-    cartTotal.innerHTML = `Total: S/${total.toFixed(2)}`;
+    // Podrías manejar aquí la validación y mostrar el modal con los datos prellenados.
 }
 
-function openCart() {
-    document.getElementById('cartModal').style.display = 'block';
+
+// Función donde el usuario selecciona un producto y procede a pagar
+function proceedToPay(productId) {
+    selectedProductId = productId; // Guarda el ID del producto seleccionado
+
+    // Llama a la función para llenar los datos del form
+    confirmPayment();
+
+    // Muestra el modal
+    const modal = document.getElementById('paymentModal');
+    modal.style.display = 'block';
+
 }
 
-function closeCart() {
+
+// Cierra el modal de pago.
+function closePaymentModal() {
+    document.getElementById('paymentModal').style.display = 'none';
     document.getElementById('cartModal').style.display = 'none';
 }
 
-function checkout() {
-    alert('Procediendo al pago...');
-    closeCart();
+function closeModalPago() {
+    document.getElementById('paymentModal').style.display = 'none';
 }
-
-function filterProducts(category) {
-    loadProducts(category);
-}
-document.addEventListener('DOMContentLoaded', () => loadProducts());
+    
 
 // Abrir el modal de inicio de sesión
 function openLoginModal() {
@@ -125,6 +171,65 @@ function cerrarModal() {
 }
 
 
+// Mostrar detalles del producto en el modal
+function showProductDetails(image) {
+    const productCard = image.parentElement;
+        const modal = document.getElementById('productModal');
+
+        modal.setAttribute('data-id', productCard.getAttribute('data-id')); // Asigna el ID al modal
+        document.getElementById('modalImage').src = productCard.dataset.img;
+        document.getElementById('modalName').textContent = productCard.dataset.nombre;
+        document.getElementById('modalPrice').textContent = `Precio: S/${parseFloat(productCard.dataset.precio).toFixed(2)}`;
+        document.getElementById('modalCategory').textContent = productCard.dataset.categoria;
+        document.getElementById('modalDescripcion').textContent = productCard.dataset.descripcion;
+
+        modal.style.display = 'flex';
+}
+
+// Cerrar el modal
+function closeDetalleModal() {
+    const modal = document.getElementById('productModal');
+    modal.style.display = 'none';
+}
+
+// Añadir al carrito desde el modal
+function addToCartFromModal() {
+    const modal = document.getElementById('productModal');
+        
+        // Obtener datos del modal
+        const id = modal.getAttribute('data-id');
+        const nombre = document.getElementById('modalName').textContent;
+        const precio = parseFloat(document.getElementById('modalPrice').textContent.replace('Precio: S/', ''));
+        const img = document.getElementById('modalImage').src;
+
+        // Verifica si el producto ya está en el carrito
+        const existingProduct = cart.find(item => item.id === id);
+
+        if (existingProduct) {
+            existingProduct.quantity += 1; // Incrementa la cantidad si ya existe
+        } else {
+            // Añade el producto al carrito con la presentación seleccionada
+            cart.push({ id, nombre, precio, img, quantity: 1 });
+        }
+
+        updateCartDisplay(); // Actualiza la visualización del carrito
+}
+
+let selectedProductId = null; // Declara y asigna el id del producto seleccionado.
+
+function proceedToPay(productId) {
+    selectedProductId = productId; // Guarda el ID del producto seleccionado
+
+    // Llame a la función para llenar los datos del formulario
+    confirmPayment();
+
+    // Muestra el modal
+    const modal = document.getElementById('paymentModal');
+    modal.style.display = 'block';
+}
+
+
+
 
 // Duración de visualización inicial (en milisegundos)
 const displayDuration = 35000; // 15 segundos
@@ -155,7 +260,6 @@ setTimeout(() => {
         setTimeout(stopAnimation, displayDuration); // Oculta de nuevo después de `displayDuration`
     }, reappearanceInterval);
 }, displayDuration);
-
 
 // Función para validar que solo se ingresen números en el teléfono
 function validarTelefono(event) {

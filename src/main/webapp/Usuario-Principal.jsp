@@ -40,8 +40,8 @@
                             <div class="ml-3">
                                 <p class="text-sm font-medium text-gray-700"><%= nombreUsuario %></p>
                             </div>
-                            <a href="${pageContext.request.contextPath}/SalirSesion" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
                         </div>
+                        <a href="${pageContext.request.contextPath}/SalirSesion" class="logout-btn flex items-center text-gray-700 hover:text-red-600"><i class="fas fa-sign-out-alt mr-2"></i></a>
                     </div>
                     <%}else{ %>
                     <button class="cart-button" onclick="openLoginModal()">
@@ -88,11 +88,12 @@
                     data-nombre="<%= producto.getNombre() %>"
                     data-precio="<%= producto.getPrecio() %>"
                     data-categoria="<%= producto.getCategoria() %>"
-                    data-img="<%= producto.getImg() %>">
-                    <img src="<%= producto.getImg() %>" alt="<%= producto.getNombre() %>" class="product-image">
+                    data-img="<%= producto.getImg() %>" 
+                    data-descripcion="<%= producto.getDescripcion() %>">
+                    <img src="<%= producto.getImg() %>" alt="<%= producto.getNombre() %>" class="product-image" onclick="showProductDetails(this)">
                     <h4><%= producto.getNombre() %></h4>
-                    <p>S/$<%= producto.getPrecio() %></p>
-                    <button class="add-to-cart-btn" onclick="addToCart()">Añadir al carrito</button>
+                    <p>S/<%= producto.getPrecio() %></p>
+                    <button class="add-to-cart-btn" onclick="addToCart(event)">Añadir al carrito</button>
                 </div>
             <%
                     }
@@ -102,9 +103,22 @@
             <%
                 }
             %>
-        </section>
-
+            </section>
         </main>
+            
+            <!-- Modal para detalles del producto -->
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeDetalleModal()">&times;</span>
+                <img id="modalImage" src="" alt="" class="modal-image">
+                <h2 id="modalName"></h2>
+                <p id="modalPrice"></p>
+                <p id="modalCategory"></p>
+                <p id="modalDescripcion"></p>
+                <button class="add-to-cart-btn" onclick="addToCartFromModal()">Añadir al carrito</button>
+            </div>
+        </div>
+            
         <div id="cartModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeCart()">&times;</span>
@@ -116,6 +130,37 @@
                 <button class="add-to-cart" onclick="checkout()">Proceder al pago</button>
             </div>
         </div>
+        
+        
+        <div id="paymentModal" class="modal">
+            <form action="ConfirmarPago" method="post" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <span class="close-modal" onclick="closeModalPago()">&times;</span>
+                    <h3>Escanea el código QR con Yape para completar el pago:</h3>
+                    <center>
+                        <img src="img/qr.jpg" alt="Código QR para pago" style="width: 150px; margin-bottom: 50px;"/>
+                    </center>
+                   <!-- Input oculto para enviar datos desde el carrito -->
+                    <input type="hidden" name="txtCodigo" id="txtCodigo" value=""required>
+                    <input type="hidden" name="txtProducto" id="txtProducto" value="" required>
+                    <input type="hidden" name="txtPresentacion" id="txtPresentacion" value="" required>
+                    <input type="hidden" name="txtCantidad" id="txtCantidad" value="" required>
+                    <input type="hidden" name="precioUnitario" id="precioUnitario" value="" required>
+                    <input type="hidden" name="selectedProductId" id="selectedProductId" value="" required>
+
+                    <div class="file-input-container">
+                        <label for="txtImagen">Ingrese la captura del pago realizado</label>
+                        <button class="file-input-button" type="button">Subir archivo</button>
+                        <input type="file" name="comprobante" id="txtImagen">
+                    </div>
+                    <br><br>
+                    <div>
+                        <button id="confirmPaymentBtn" class="close-button" onclick="confirmPayment()">Ya pagué</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
                 
         <div class="modal" id="login-modal">
             <div class="modal-content">
@@ -239,6 +284,12 @@
             
             function cerrarModalMensaje() {
                 document.getElementById("modalMensaje").style.display = "none";
+            }
+            function generateUniqueCode() {
+                // Generar un código de venta único usando un prefijo y un número aleatorio
+                const prefix = 'VTA-'; // Prefijo para el código de venta
+                const randomNum = Math.floor(Math.random() * 1000000); // Genera un número aleatorio entre 0 y 1,000,000
+                return prefix + randomNum; // Devuelve el código único
             }
         </script>
     </body>

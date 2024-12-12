@@ -33,6 +33,7 @@ controller\ListarProveedor.class
 controller\RegistrarAlmacen.class
 controller\RegistrarCliente.class
 controller\ExportarProductos.class
+controller\ConfirmarPago.class
 dao\ProveedorDAO.class
 controller\EditarPresentacion.class
 controller\EditarProveedor.class
@@ -53,6 +54,7 @@ model\Almacen.class
 service\ReportePDF.class
 controller\EliminarProducto.class
 controller\RegistrarVenta.class
+controller\MostrarProductos.class
 controller\RegistrarProducto.class
 dao\CategoriaDAO.class
 model\Presentacion.class

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="wiewport" conte="width=device-width, initial-scale=1.0">
         <link rel="icon" href="img/logo.ico" type="image/x-icon">
-        <<link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/style.css"/>
         <title>BOTICA LUHFARMA</title>
     </head>
     <body>

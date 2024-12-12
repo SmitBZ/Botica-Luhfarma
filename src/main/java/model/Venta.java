@@ -12,13 +12,14 @@ public class Venta {
     private int presentacionID;
     private int cantidad;
     private double precioUnitario;
+    private String comprobante;
 
     // Constructor vacío
     public Venta() {
     }
 
     // Constructor con parámetros
-    public Venta(int idCliente, int idModalidad, String codigoVenta, int productoID, int presentacionID, int cantidad, double precioUnitario) {
+    public Venta(int idCliente, int idModalidad, String codigoVenta, int productoID, int presentacionID, int cantidad, double precioUnitario, String comprobante) {
         this.idCliente = idCliente;
         this.idModalidad = idModalidad;
         this.codigoVenta = codigoVenta;
@@ -26,6 +27,7 @@ public class Venta {
         this.presentacionID = presentacionID;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
+        this.comprobante = comprobante;
     }
 
     // Getters y Setters
@@ -83,5 +85,13 @@ public class Venta {
 
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+
+    public String getComprobante() {
+        return comprobante;
+    }
+
+    public void setComprobante(String comprobante) {
+        this.comprobante = comprobante;
     }
 }

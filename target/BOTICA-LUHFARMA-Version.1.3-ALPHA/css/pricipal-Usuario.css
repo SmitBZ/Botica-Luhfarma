@@ -347,3 +347,219 @@
 .add-to-cart:hover {
     background-color: #42a7db; 
 }
+
+.add-to-cart-btn {
+    background-color: #4FC3F7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #1e9dd6;
+    transform: scale(1.05);
+}
+
+.add-to-cart-btn:active {
+    background-color: #0277BD;
+    transform: scale(0.95);
+}
+
+.close-button {
+    background-color: #4FC3F7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.close-button:hover {
+    background-color: #2678c7;
+    transform: scale(1.05);
+}
+
+.close-button:active {
+    background-color: #1e5f99;
+    transform: scale(0.95);
+}
+
+
+/* Contenedor principal de los elementos del carrito */
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd; /* Bordes suaves */
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Fondo claro */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Imagen del producto */
+.cart-item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover; /* Ajustar imagen */
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Información del producto */
+.cart-item-info {
+    flex: 1; /* Ocupa todo el espacio disponible */
+    margin-left: 10px;
+}
+
+.cart-item-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.cart-item-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Botón para eliminar */
+.remove-btn {
+    background-color: #ff4d4d; /* Rojo claro */
+    color: white; /* Texto en blanco */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 8px 12px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.remove-btn:hover {
+    background-color: #e60000; /* Rojo más oscuro al pasar el mouse */
+}
+
+.remove-btn:active {
+    background-color: #cc0000; /* Rojo intenso al hacer clic */
+    transform: scale(0.98); /* Leve efecto de pulsación */
+}
+
+/* Estilo para la etiqueta */
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: block; /* Para que aparezca encima del input */
+    margin-bottom: 8px;
+}
+
+/* Estilo para el contenedor del input y botón */
+.file-input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Oculta el input de archivo predeterminado */
+#txtImagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Botón personalizado */
+.file-input-button {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #2678c7; /* Verde claro */
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-input-button:hover {
+    background-color: #1e9dd6; /* Verde más oscuro al pasar el mouse */
+}
+
+.file-input-button:active {
+    background-color: #2678c7; /* Verde intenso al hacer clic */
+    transform: scale(0.98); /* Efecto de pulsación */
+}
+
+
+/* Estilo general del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen dentro del modal */
+.modal-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Botón de cerrar */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Estilo del selector */
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+

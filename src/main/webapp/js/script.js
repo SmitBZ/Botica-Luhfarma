@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(function() {
             loadingScreen.style.display = 'none';
-            window.location.href = "Usuario-Principal.jsp";
+            window.location.href = "MostrarProductos";
         }, 500);
     }, 3000);
 });
